@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      3.9.0 22.07.2011
+* @version      4.10.1 22.07.2011
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -143,7 +143,7 @@ class JshoppingControllerManufacturers extends JControllerLegacy{
                 $path_full = $jshopConfig->image_manufs_path."/".$name;
                 $path_thumb = $jshopConfig->image_manufs_path."/".$name;
 
-                if (!ImageLib::resizeImageMagic($path_full, $category_width_image, $category_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_thumb, $jshopConfig->image_quality, $jshopConfig->image_fill_color)) {
+                if (!ImageLib::resizeImageMagic($path_full, $category_width_image, $category_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_thumb, $jshopConfig->image_quality, $jshopConfig->image_fill_color, $jshopConfig->image_interlace)) {
                     JError::raiseWarning("",_JSHOP_ERROR_CREATE_THUMBAIL);
                     saveToLog("error.log", "SaveManufacturer - Error create thumbail");
                 }

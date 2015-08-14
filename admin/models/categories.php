@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.7.0 05.11.2013
+* @version      4.10.1 05.11.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -197,7 +197,7 @@ class JshoppingModelCategories extends JModelLegacy{
                 $path_full = $jshopConfig->image_category_path."/".$name;
                 $path_thumb = $jshopConfig->image_category_path."/".$name;
                 if ($category_width_image || $category_height_image){
-                    if (!ImageLib::resizeImageMagic($path_full, $category_width_image, $category_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_thumb, $jshopConfig->image_quality, $jshopConfig->image_fill_color)) {
+                    if (!ImageLib::resizeImageMagic($path_full, $category_width_image, $category_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_thumb, $jshopConfig->image_quality, $jshopConfig->image_fill_color, $jshopConfig->image_interlace)) {
                         JError::raiseWarning("",_JSHOP_ERROR_CREATE_THUMBAIL);
                         saveToLog("error.log", "SaveCategory - Error create thumbail");
                     }

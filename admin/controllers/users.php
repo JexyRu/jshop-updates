@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 31.05.2014
+* @version      4.10.1 31.05.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -121,6 +121,8 @@ class JshoppingControllerUsers extends JControllerLegacy{
         $user_shop = JSFactory::getTable('userShop', 'jshop');
         $user_id = JRequest::getInt("user_id");
         $post = JRequest::get("post");
+		
+		if ($post['f_name']=="") $post['f_name'] = $post['email'];
         
         if (!$user_id){
             $params = JComponentHelper::getParams('com_users');

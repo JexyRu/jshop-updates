@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 14.03.2015
+* @version      4.10.1 14.03.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -162,10 +162,10 @@ class JSFactory{
         if (!$jshopConfig->load_css) return 0;
         if (!$load){
             $document = JFactory::getDocument();
-            $jshopConfig = JSFactory::getConfig();
-            $document->addStyleSheet(JURI::root().'components/com_jshopping/css/'.$jshopConfig->template.'.css');
-            if (file_exists(JPATH_ROOT.'/components/com_jshopping/css/'.$jshopConfig->template.'.custom.css')){
-                $document->addStyleSheet(JURI::root().'components/com_jshopping/css/'.$jshopConfig->template.'.custom.css');
+            $jshopConfig = JSFactory::getConfig();            
+            $document->addStyleSheet($jshopConfig->css_live_path.$jshopConfig->template.'.css');
+            if (file_exists($jshopConfig->css_path.$jshopConfig->template.'.custom.css')){
+                $document->addStyleSheet($jshopConfig->css_live_path.$jshopConfig->template.'.custom.css');
             }
             $load = 1;
         }
@@ -179,9 +179,9 @@ class JSFactory{
             JHtml::_('behavior.framework');
             JHtml::_('bootstrap.framework');
             if ($jshopConfig->load_javascript){
-                $document->addScript(JURI::root().'components/com_jshopping/js/jquery/jquery.media.js');
-                $document->addScript(JURI::root().'components/com_jshopping/js/functions.js');
-                $document->addScript(JURI::root().'components/com_jshopping/js/validateForm.js');
+                $document->addScript($jshopConfig->file_jquery_media_js);
+                $document->addScript($jshopConfig->file_functions_js);
+                $document->addScript($jshopConfig->file_validateform_js);
             }
             $load = 1;
         }
@@ -193,9 +193,9 @@ class JSFactory{
             $jshopConfig = JSFactory::getConfig();
             if ($jshopConfig->load_javascript){
                 $document = JFactory::getDocument();
-                $document->addScript(JURI::root().'components/com_jshopping/js/jquery/jquery.MetaData.js');
-                $document->addScript(JURI::root().'components/com_jshopping/js/jquery/jquery.rating.pack.js');
-                $document->addStyleSheet(JURI::root().'components/com_jshopping/css/jquery.rating.css');
+                $document->addScript($jshopConfig->file_metadata_js);
+                $document->addScript($jshopConfig->file_rating_js);
+                $document->addStyleSheet($jshopConfig->file_rating_css);
             }
             $load = 1;
         }
@@ -207,20 +207,9 @@ class JSFactory{
         if (!$jshopConfig->load_jquery_lightbox) return 0;
         if (!$load){
             $document = JFactory::getDocument();
-            $document->addScript(JURI::root().'components/com_jshopping/js/jquery/jquery.lightbox-0.5.pack.js');
-            $document->addStyleSheet(JURI::root().'components/com_jshopping/css/jquery.lightbox-0.5.css');
-            $document->addScriptDeclaration('function initJSlightBox(){
-                jQuery("a.lightbox").lightBox({
-                    imageLoading: "'.JURI::root().'components/com_jshopping/images/loading.gif",
-                    imageBtnClose: "'.JURI::root().'components/com_jshopping/images/close.gif",
-                    imageBtnPrev: "'.JURI::root().'components/com_jshopping/images/prev.gif",
-                    imageBtnNext: "'.JURI::root().'components/com_jshopping/images/next.gif",
-                    imageBlank: "'.JURI::root().'components/com_jshopping/images/blank.gif",
-                    txtImage: "'._JSHOP_IMAGE.'",
-                    txtOf: "'._JSHOP_OF.'"
-                });
-            }
-            jQuery(function() { initJSlightBox(); });');
+            $document->addScript($jshopConfig->file_lightbox_js);
+            $document->addStyleSheet($jshopConfig->file_lightbox_css);
+            $document->addScriptDeclaration($jshopConfig->script_lightbox_init);
             $load = 1;
         }
     }
@@ -242,13 +231,13 @@ class JSFactory{
         if ($langtag==""){
             $langtag = $lang->getTag();
         }
-        $langpatch = JPATH_ROOT.'/components/com_jshopping/lang/';        
+        $langpatch = JPATH_ROOT.'/components/com_jshopping/lang/';
         if (file_exists($langpatch.'override/'.$langtag.'.php'))
-            require_once($langpatch.'override/'.$langtag.'.php');
+            include_once($langpatch.'override/'.$langtag.'.php');
         if (file_exists($langpatch.$langtag.'.php'))
-            require_once($langpatch.$langtag.'.php');
+            include_once($langpatch.$langtag.'.php');
         else 
-            require_once($langpatch.'en-GB.php');
+            include_once($langpatch.'en-GB.php');
         JSFactory::reloadConfigFieldTLF();
     }
 
@@ -257,10 +246,11 @@ class JSFactory{
         if ($langtag==""){
             $langtag = $lang->getTag();
         }
-        if(file_exists(JPATH_ROOT . '/components/com_jshopping/lang/'.$extname.'/'.$langtag.'.php'))
-            require_once (JPATH_ROOT . '/components/com_jshopping/lang/'.$extname.'/'.$langtag.'.php');
+        $langpatch = JPATH_ROOT.'/components/com_jshopping/lang/';
+        if (file_exists($langpatch.$extname.'/'.$langtag.'.php'))
+            include_once($langpatch.$extname.'/'.$langtag.'.php');
         else 
-            require_once (JPATH_ROOT . '/components/com_jshopping/lang/'.$extname.'/en-GB.php');
+            include_once($langpatch.$extname.'/en-GB.php');
     }
 
     public static function loadAdminLanguageFile($langtag = ""){
@@ -268,13 +258,13 @@ class JSFactory{
         if ($langtag==""){
             $langtag = $lang->getTag();
         }
-        $langpatch = JPATH_ROOT.'/administrator/components/com_jshopping/lang/';        
+        $langpatch = JPATH_ROOT.'/administrator/components/com_jshopping/lang/';
         if (file_exists($langpatch.'override/'.$langtag.'.php'))
-            require_once($langpatch.'override/'.$langtag.'.php');
+            include_once($langpatch.'override/'.$langtag.'.php');
         if (file_exists($langpatch.$langtag.'.php'))
-            require_once($langpatch.$langtag.'.php');
+            include_once($langpatch.$langtag.'.php');
         else 
-            require_once($langpatch.'en-GB.php');
+            include_once($langpatch.'en-GB.php');
         JSFactory::reloadConfigFieldTLF();
     }
 
@@ -283,10 +273,11 @@ class JSFactory{
         if ($langtag==""){
             $langtag = $lang->getTag();
         }
-        if(file_exists(JPATH_ROOT . '/administrator/components/com_jshopping/lang/'.$extname.'/'.$langtag.'.php'))
-            require_once (JPATH_ROOT . '/administrator/components/com_jshopping/lang/'.$extname.'/'.$langtag.'.php');
+        $langpatch = JPATH_ROOT.'/administrator/components/com_jshopping/lang/';
+        if (file_exists($langpatch.$extname.'/'.$langtag.'.php'))
+            include_once($langpatch.$extname.'/'.$langtag.'.php');
         else 
-            require_once (JPATH_ROOT . '/administrator/components/com_jshopping/lang/'.$extname.'/en-GB.php');
+            include_once($langpatch.$extname.'/en-GB.php');
     }
 
     public static function getLang($langtag = ""){

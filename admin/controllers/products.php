@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 18.04.2015
+* @version      4.10.1 16.06.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -20,7 +20,7 @@ class JshoppingControllerProducts extends JControllerLegacy{
         addSubmenu("products");
     }
     
-    function display($cachable = false, $urlparams = false){    
+    function display($cachable = false, $urlparams = false){
         $mainframe = JFactory::getApplication();    
         $db = JFactory::getDBO();
         $jshopConfig = JSFactory::getConfig();
@@ -942,7 +942,7 @@ class JshoppingControllerProducts extends JControllerLegacy{
         $languages = $_lang->getAllLanguages(1);
         $_products = JSFactory::getModel("products");
         // Get all data about products
-        $tables = array('attr', 'attr2', 'images', 'prices', 'relations', 'to_categories', 'videos', 'files');
+        $tables = array('attr', 'attr2', 'images', 'prices', 'relations', 'to_categories', 'videos', 'files', 'free_attr');
         foreach ($cid as $key=>$value){
             $product = JSFactory::getTable('product', 'jshop');
             $product->load($value);

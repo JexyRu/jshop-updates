@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.7.0 26.09.2014
+* @version      4.10.1 26.09.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -397,7 +397,7 @@ class JshoppingModelProducts extends JModelLegacy{
                 rename($path_image, $path_full);
 
 				if ($jshopConfig->image_product_original_width || $jshopConfig->image_product_original_height){
-                    if (!ImageLib::resizeImageMagic($path_full, $jshopConfig->image_product_original_width, $jshopConfig->image_product_original_height, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_full, $jshopConfig->image_quality, $jshopConfig->image_fill_color)){
+                    if (!ImageLib::resizeImageMagic($path_full, $jshopConfig->image_product_original_width, $jshopConfig->image_product_original_height, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_full, $jshopConfig->image_quality, $jshopConfig->image_fill_color, $jshopConfig->image_interlace)){
                         JError::raiseWarning("",_JSHOP_ERROR_CREATE_THUMBAIL);
                         saveToLog("error.log", "SaveProduct - Error create thumbail");
                         $error = 1;
@@ -418,7 +418,7 @@ class JshoppingModelProducts extends JModelLegacy{
                     }
                     
                     if ($product_width_image || $product_height_image){
-                        if (!ImageLib::resizeImageMagic($path_full, $product_width_image, $product_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_thumb, $jshopConfig->image_quality, $jshopConfig->image_fill_color)){
+                        if (!ImageLib::resizeImageMagic($path_full, $product_width_image, $product_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_thumb, $jshopConfig->image_quality, $jshopConfig->image_fill_color, $jshopConfig->image_interlace)){
                             JError::raiseWarning("",_JSHOP_ERROR_CREATE_THUMBAIL);
                             saveToLog("error.log", "SaveProduct - Error create thumbail");
                             $error = 1;
@@ -440,7 +440,7 @@ class JshoppingModelProducts extends JModelLegacy{
                     }
 
                     if ($product_full_width_image || $product_full_height_image){
-                        if (!ImageLib::resizeImageMagic($path_full, $product_full_width_image, $product_full_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_image, $jshopConfig->image_quality, $jshopConfig->image_fill_color)){
+                        if (!ImageLib::resizeImageMagic($path_full, $product_full_width_image, $product_full_height_image, $jshopConfig->image_cut, $jshopConfig->image_fill, $path_image, $jshopConfig->image_quality, $jshopConfig->image_fill_color, $jshopConfig->image_interlace)){
                             JError::raiseWarning("",_JSHOP_ERROR_CREATE_THUMBAIL);
                             $error = 1;
                         }    

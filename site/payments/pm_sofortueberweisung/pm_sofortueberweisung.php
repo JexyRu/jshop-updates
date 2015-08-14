@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.4.2 09.04.2014
+* @version      4.10.1 19.06.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -26,6 +26,8 @@ class pm_sofortueberweisung extends PaymentRoot{
 
 	function checkTransaction($params, $order, $act){
         
+		$order->order_total = $this->fixOrderTotal($order);
+		
         if ($params['user_id'] != $_POST['user_id']){
             return array(0, 'Error user_id. Order ID '.$order->order_id);
         } 
@@ -93,6 +95,8 @@ class pm_sofortueberweisung extends PaymentRoot{
 	function showEndForm($params, $order){
         $jshopConfig = JSFactory::getConfig();        
 	    $item_name = sprintf(_JSHOP_PAYMENT_NUMBER, $order->order_number);
+		
+		$order->order_total = $this->fixOrderTotal($order);
         
         $data = array( 
                       $params['user_id'], // user_id 
@@ -143,6 +147,16 @@ class pm_sofortueberweisung extends PaymentRoot{
         $params['checkHash'] = 0;
         $params['checkReturnParams'] = 0;
     return $params;
+    }
+	
+	function fixOrderTotal($order){
+        $total = $order->order_total;
+        if ($order->currency_code_iso=='HUF'){
+            $total = round($total);
+        }else{
+            $total = number_format($total, 2, '.', '');
+        }
+    return $total;
     }
 }
 ?>

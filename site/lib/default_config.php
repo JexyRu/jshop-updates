@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 31.01.2015
+* @version      4.10.1 19.06.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -52,6 +52,9 @@ $config->image_vendors_live_path = $config->live_path."files/img_vendors";
 $config->image_vendors_path = $config->path."files/img_vendors";
 
 $config->template_path = $config->path."templates/";
+
+$config->css_path = $config->path."css/";
+$config->css_live_path = $config->live_path."css/";
 
 $config->file_generete_pdf_order = $config->path."lib/generete_pdf_order.php";
 
@@ -132,6 +135,7 @@ $config->product_button_back_use_end_list = 0;
 $config->display_tax_id_in_pdf = 0;
 $config->image_quality = 100;
 $config->image_fill_color = 0xffffff;
+$config->image_interlace = 1;
 $config->product_price_qty_discount = 2; // (1 - price, 2 - percent)
 $config->rating_starparts = 2; //star is divided to {2} part
 $config->show_list_price_shipping_weight = 0;
@@ -209,6 +213,26 @@ $config->hide_weight_in_cart_weight0 = 1;
 $config->hide_from_basic_price = 0;
 $config->ext_menu_checkout_step = 0;
 $config->product_hide_price_null = 0;
+$config->file_jquery_media_js = $config->live_path.'js/jquery/jquery.media.js';
+$config->file_functions_js = $config->live_path.'js/functions.js';
+$config->file_validateform_js = $config->live_path.'js/validateForm.js';
+$config->file_lightbox_js = $config->live_path.'js/jquery/jquery.lightbox.js';
+$config->file_lightbox_css = $config->live_path.'css/jquery.lightbox.css';
+$config->script_lightbox_init = 'function initJSlightBox(){
+    jQuery("a.lightbox").lightBox({
+        imageLoading: "'.JURI::root().'components/com_jshopping/images/loading.gif",
+        imageBtnClose: "'.JURI::root().'components/com_jshopping/images/close.gif",
+        imageBtnPrev: "'.JURI::root().'components/com_jshopping/images/prev.gif",
+        imageBtnNext: "'.JURI::root().'components/com_jshopping/images/next.gif",
+        imageBlank: "'.JURI::root().'components/com_jshopping/images/blank.gif",
+        txtImage: "'._JSHOP_IMAGE.'",
+        txtOf: "'._JSHOP_OF.'"
+    });
+}
+jQuery(function() { initJSlightBox(); });';
+$config->file_metadata_js = $config->live_path.'js/jquery/jquery.MetaData.js';
+$config->file_rating_js = $config->live_path.'js/jquery/jquery.rating.pack.js';
+$config->file_rating_css = $config->live_path.'css/jquery.rating.css';
 
 $config->product_search_fields = array(
     'prod.ml:name',
