@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.2 18.12.2014
+* @version      4.10.2 04.07.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -80,7 +80,7 @@ class jshopProduct extends JTableAvto{
     }
     
     function getData($field){
-        if (isset($this->attribute_active_data->ext_data) && isset($this->attribute_active_data->ext_data->$field)){
+        if (isset($this->attribute_active_data->ext_data) && isset($this->attribute_active_data->ext_data->$field) && $this->attribute_active_data->ext_data->$field!=''){
             return $this->attribute_active_data->ext_data->$field;
         }else{
             return $this->$field;
@@ -742,15 +742,34 @@ class jshopProduct extends JTableAvto{
                 }
             }
         }
-        $grname = '';
+        
+        $rowsblock = array();
         foreach($rows as $k=>$v){
-            if ($v['groupname']!=$grname){
-                $grname = $v['groupname'];
-                $rows[$k]['grshow'] = 1;
+            if ($v['groupname']==''){
+                $grname = 'defaultgroup';
             }else{
-                $rows[$k]['grshow'] = 0;
+                $grname = $v['groupname'];
             }
-        }        
+            $rowsblock[$grname][] = $v;
+        }
+        
+        $rows = array();
+        foreach($rowsblock as $bl=>$val){
+            foreach($val as $k=>$v){
+                if ($k==0){
+                    $v['grshow'] = 1;
+                }else{
+                    $v['grshow'] = 0;
+                }
+                if ($k==(count($val)-1)){
+                    $v['grshowclose'] = 1;
+                }else{
+                    $v['grshowclose'] = 0;
+                }
+                $rows[] = $v;
+            }
+        }
+
         return $rows;
     }
     

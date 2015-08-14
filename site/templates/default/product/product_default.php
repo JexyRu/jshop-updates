@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.2 05.11.2013
+* @version      4.10.2 05.11.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -267,7 +267,7 @@ include(dirname(__FILE__)."/load.js.php");
                     </span>
                 </div>
                                 
-                <?php if ($extra_field['grshow']){?>
+                <?php if ($extra_field['grshowclose']){?>
                     </div>
                 <?php }?>
             <?php }?>

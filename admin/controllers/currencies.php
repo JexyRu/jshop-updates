@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 03.11.2010
+* @version      4.10.2 03.11.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -169,15 +169,14 @@ class JshoppingControllerCurrencies extends JControllerLegacy{
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger( 'onBeforeRemoveCurrencie', array(&$cid) );
         
-        foreach ($cid as $key => $value) {
-            $query = "DELETE FROM `#__jshopping_currencies` WHERE `currency_id` = '" . $db->escape($value) . "'";
-            $db->setQuery($query);
-            if($db->query())
-                $text .= _JSHOP_CURRENCY_DELETED."<br>";
-            else
-                $text .= _JSHOP_CURRENCY_ERROR_DELETED."<br>";
-
-        }        
+        $model = JSFactory::getModel("currencies");
+        $resdelete = $model->deleteList($cid);
+        
+        if ($resdelete)
+            $text = _JSHOP_CURRENCY_DELETED;
+        else
+            $text = _JSHOP_CURRENCY_ERROR_DELETED;
+                
         $dispatcher->trigger( 'onAfterRemoveCurrencie', array(&$cid) );
         
         $this->setRedirect("index.php?option=com_jshopping&controller=currencies", $text); 

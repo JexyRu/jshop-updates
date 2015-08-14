@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 13.08.2013
+* @version      4.10.2 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -24,7 +24,7 @@ defined('_JEXEC') or die('Restricted access');
 	<td>
 	    <input class="input_box" id="install_package" name="install_package" type="file" size="57" />
         <input type="hidden" name="installtype" value="package" />
-	    <input class="button" type="submit" value="<?php echo _JSHOP_UPDATE_PACKAGE_UPLOAD; ?>" />
+	    <input class="button btn" type="submit" value="<?php echo _JSHOP_UPDATE_PACKAGE_UPLOAD; ?>" />
 	</td>
 </tr>
 <?php $pkey="etemplatevar1";if ($this->$pkey){print $this->$pkey;}?>
@@ -41,9 +41,9 @@ defined('_JEXEC') or die('Restricted access');
         <label for="install_url"><?php echo _JSHOP_UPDATE_UPLOAD_FROM_URL_PACKAGE_FILE; ?>:</label>
     </td>
     <td>
-        <input class="input_box" id="install_url" name="install_url" type="text" value="http://" size="57" />
+        <input style="margin:0px;" class="input_box" id="install_url" name="install_url" type="text" value="http://" size="57" />
         <input type="hidden" name="installtype" value="url" />
-        <input class="button" type="submit" value="<?php echo _JSHOP_UPDATE_PACKAGE_UPLOAD; ?>" />
+        <input class="button btn" type="submit" value="<?php echo _JSHOP_UPDATE_PACKAGE_UPLOAD; ?>" />
     </td>
 </tr>
 <?php $pkey="etemplatevar2";if ($this->$pkey){print $this->$pkey;}?>
