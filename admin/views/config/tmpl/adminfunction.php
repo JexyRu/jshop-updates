@@ -240,6 +240,15 @@ $lists=$this->lists;
         <input type="checkbox" name="admin_show_product_extra_field" value="1" <?php if ($jshopConfig->admin_show_product_extra_field) echo 'checked="checked"';?> />
     </td>
 </tr>
+<tr>
+    <td class="key">
+        <?php echo _JSHOP_PRODUCT_WEIGHT?>
+    </td>
+    <td>
+        <input type="checkbox" name="admin_show_weight" value="1" <?php if ($jshopConfig->admin_show_weight) echo 'checked="checked"';?> />
+    </td>
+</tr>
+
 <?php $pkey="etemplatevar";if ($this->$pkey){print $this->$pkey;}?>
 </table>
 </fieldset>

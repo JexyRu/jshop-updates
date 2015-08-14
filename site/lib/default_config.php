@@ -214,6 +214,7 @@ $config->hide_weight_in_cart_weight0 = 1;
 $config->hide_from_basic_price = 0;
 $config->ext_menu_checkout_step = 0;
 $config->product_hide_price_null = 0;
+$config->admin_show_weight = 1;
 $config->file_jquery_media_js = $config->live_path.'js/jquery/jquery.media.js';
 $config->file_functions_js = $config->live_path.'js/functions.js';
 $config->file_validateform_js = $config->live_path.'js/validateForm.js';
@@ -327,7 +328,8 @@ $other_config_select = array(
 
 $adminfunction_other_config = array(
     'tax',
-    'stock'
+    'stock',
+    'admin_show_weight'
 );
     
 $checkout_other_config = array(

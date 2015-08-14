@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.1 14.03.2015
+* @version      4.10.4 14.03.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -80,7 +80,7 @@ class JSFactory{
                 $config->product_show_vendor = 0;
                 $config->product_show_vendor_detail = 0;
             }
-			$config->copyrightText = '<span id="mxcpr"><a target="_blank" href="https://www.webdesigner-profi.de/">Copyright MAXXmarketing Webdesigner GmbH</a></span>';
+			$config->copyrightText = '<span id="mxcpr"><a target="_blank" href="https://www.webdesigner-profi.de/">'.$config->getCopyrightText().'</a></span>';
             if ($config->image_resize_type==0){
                 $config->image_cut = 1;
                 $config->image_fill = 2;
@@ -105,6 +105,10 @@ class JSFactory{
             }
 			if (!$config->admin_show_product_basic_price){
                 $config->cart_basic_price_show = 0;
+            }
+            if (!$config->admin_show_weight){
+                $config->product_show_weight = 0;
+                $config->product_list_show_weight = 0;
             }
             $config->use_ssl = intval($config->use_ssl);
 

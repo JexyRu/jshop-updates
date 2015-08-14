@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.1 05.11.2013
+* @version      4.10.4 05.11.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -180,6 +180,7 @@ class JshoppingModelCategories extends JModelLegacy{
         $upload->setFilterName(1);
         if ($upload->upload()){
             $name = $upload->getName();
+            $dispatcher->trigger('onAfterUploadCategoryImage', array(&$post, &$name));
             if ($post['old_image'] && $name!=$post['old_image']){
                 @unlink($jshopConfig->image_category_path."/".$post['old_image']);
             }

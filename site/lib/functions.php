@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 09.01.2015
+* @version      4.10.4 09.01.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -1528,6 +1528,21 @@ function json_value_encode($val, $textfix = 0){
     }
     $val = str_replace('"', '\"', $val);
     return $val;
+}
+
+function initLoadJoomshoppingLanguageFile(){
+    if (!JRequest::getInt('no_lang')){
+        JSFactory::loadLanguageFile();
+    }   
+}
+
+function reloadPriceJoomshoppingNewCurrency($back = ''){
+    header("Cache-Control: no-cache, must-revalidate");
+    updateAllprices();    
+    $mainframe = JFactory::getApplication();
+    if ($back!=''){
+        $mainframe->redirect($back);
+    }
 }
 
 ?>

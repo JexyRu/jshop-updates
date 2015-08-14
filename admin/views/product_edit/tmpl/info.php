@@ -88,7 +88,7 @@ defined('_JEXEC') or die('Restricted access');
                     }else{
                         $_add_price=$row->product_price - ($row->product_price * $add_prices[$i]->discount / 100);
                     }
-                    $_add_price=number_format($_add_price,2,".","");
+                    $_add_price = formatEPrice($_add_price);
                     ?>
                     <tr id="add_price_<?php print $i?>">
                         <td>
@@ -148,7 +148,7 @@ defined('_JEXEC') or die('Restricted access');
        </td>
      </tr>
      <?php } ?>
-     
+     <?php if ($jshopConfig->admin_show_weight){?>
      <tr>
        <td class="key">
          <?php echo _JSHOP_PRODUCT_WEIGHT;?>
@@ -156,7 +156,8 @@ defined('_JEXEC') or die('Restricted access');
        <td>
          <input type="text" name="product_weight" id="product_weight" value="<?php echo $row->product_weight?>" /> <?php print sprintUnitWeight();?>
        </td>
-     </tr>     
+     </tr>
+	 <?php }?>
      <tr>
        <td class="key">
          <?php echo _JSHOP_EAN_PRODUCT;?>

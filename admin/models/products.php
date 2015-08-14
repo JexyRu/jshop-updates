@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.1 26.09.2014
+* @version      4.10.4 26.09.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -631,7 +631,7 @@ class JshoppingModelProducts extends JModelLegacy{
                 foreach($post['attrib_id'] as $field_id=>$val){
                     $productAttribut->set("attr_".intval($field_id), $val[$k]);
                 }
-                $dispatcher->trigger('onBeforeProductAttributStore', array(&$productAttribut, &$product, &$product_id, &$post));
+                $dispatcher->trigger('onBeforeProductAttributStore', array(&$productAttribut, &$product, &$product_id, &$post, $k));
                 if ($productAttribut->check()){
                     $productAttribut->store();
                 }

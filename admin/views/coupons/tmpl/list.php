@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.10.0 13.08.2013
+* @version      4.10.4 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -102,7 +102,7 @@ foreach($rows as $row){
    <td class="center">
     <?php if ($row->used) print _JSHOP_YES; else print _JSHOP_NO?>
    </td>
-   <?php echo $coupon->tmp_extra_column_cells?>
+   <?php echo $row->tmp_extra_column_cells?>
    <td class="center">     
      <?php echo JHtml::_('jgrid.published', $row->coupon_publish, $i);?>
    </td>

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.3 18.12.2014
+* @version      4.10.4 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -958,11 +958,11 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         
         if (!$adv_user->delivery_adress) $order->copyDeliveryData();
         
-        $dispatcher->trigger('onBeforeCreateOrder', array(&$order));
+        $dispatcher->trigger('onBeforeCreateOrder', array(&$order, &$cart));
 
         $order->store();
 
-        $dispatcher->trigger('onAfterCreateOrder', array(&$order));
+        $dispatcher->trigger('onAfterCreateOrder', array(&$order, &$cart));
 
         if ($cart->getCouponId()){
             $coupon = JSFactory::getTable('coupon', 'jshop');
@@ -980,7 +980,7 @@ class JshoppingControllerCheckout extends JControllerLegacy{
 
         $order->saveOrderItem($cart->products);
 
-		$dispatcher->trigger('onAfterCreateOrderFull', array(&$order));
+		$dispatcher->trigger('onAfterCreateOrderFull', array(&$order, &$cart));
 		
         $session->set("jshop_end_order_id", $order->order_id);
 
@@ -1005,7 +1005,7 @@ class JshoppingControllerCheckout extends JControllerLegacy{
             }
         }
         
-        $dispatcher->trigger('onEndCheckoutStep5', array(&$order) );
+        $dispatcher->trigger('onEndCheckoutStep5', array(&$order, &$cart));
 
         $session->set("jshop_send_end_form", 0);
         

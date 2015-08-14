@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 18.12.2014
+* @version      4.10.4 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -241,5 +241,16 @@ class jshopConfig extends JTableAvto {
     function getFrontLang(){
         return $this->frontend_lang;
     }
+    
+    function getCopyrightText(){
+        $k = strlen(getJHost()) % 3;
+        $lct = $this->getCopyrightTexts();
+        return $lct[$k];
+    }
+    
+    function getCopyrightTexts(){
+        return array('Copyright MAXXmarketing GmbH', 'Copyright www.webdesigner-profi.de', 'Copyright www.maxx-marketing.net');
+    }
+    
 }
 ?>

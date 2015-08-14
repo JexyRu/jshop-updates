@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 18.04.2015
+* @version      4.10.4 18.04.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -12,7 +12,7 @@ include_once(dirname(__FILE__)."/lib/shop_item_menu.php");
 
 function jshoppingBuildRoute(&$query){
     $segments = array();
-    JSFactory::loadLanguageFile();
+	initLoadJoomshoppingLanguageFile();
     $shim = shopItemMenu::getInstance();
 	JPluginHelper::importPlugin('jshoppingrouter');
     $dispatcher = JDispatcher::getInstance();
@@ -208,7 +208,7 @@ function jshoppingBuildRoute(&$query){
 
 function jshoppingParseRoute($segments){
     $vars = array();
-    JSFactory::loadLanguageFile();
+    initLoadJoomshoppingLanguageFile();
     $reservedFirstAlias = JSFactory::getReservedFirstAlias();    
     $menu = JFactory::getApplication()->getMenu();    
     $menuItem = $menu->getActive();
