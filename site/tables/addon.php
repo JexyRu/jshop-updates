@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.10.3 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -119,7 +119,7 @@ class jshopAddon extends JTable{
 	
 	function installShippingMethod($data, $installexist = 0){
         $db = JFactory::getDbo();
-        $db->setQuery("SELECT id FROM `#__jshopping_shipping_method` WHERE `alias`='".$db->escape($data['alias'])."'");
+        $db->setQuery("SELECT shipping_id FROM `#__jshopping_shipping_method` WHERE `alias`='".$db->escape($data['alias'])."'");
         $exid = (int)$db->loadResult();
         if ($exid && !$installexist){
             return -1;

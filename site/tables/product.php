@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.2 04.07.2015
+* @version      4.10.3 10.07.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -808,7 +808,7 @@ class jshopProduct extends JTableAvto{
 
         $adv_query = ""; $adv_from = ""; $adv_result = $this->getBuildQueryListProductDefaultResult();
         $this->getBuildQueryListProductSimpleList("last", $array_categories, $filters, $adv_query, $adv_from, $adv_result);
-        $order_query = "ORDER BY prod.product_id";
+        $order_query = "ORDER BY ".$jshopConfig->get_last_products_order_query;
 
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeQueryGetProductList', array("last_products", &$adv_result, &$adv_from, &$adv_query, &$order_query, &$filters));

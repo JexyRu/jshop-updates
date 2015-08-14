@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.8.0 13.08.2013
+* @version      4.10.3 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -11,7 +11,7 @@ defined('_JEXEC') or die('Restricted access');
 <?php
 $row=$this->row;
 ?>
-<form action="index.php?option=com_jshopping&controller=licensekeyaddon" method="post" id="adminForm" onsubmit="return false;">
+<form action="index.php?option=com_jshopping&controller=licensekeyaddon" method="post" id="adminForm">
 <?php print $this->tmp_html_start?>
 <div class="col100">
 <fieldset class="adminform">

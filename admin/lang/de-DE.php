@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.0 10.02.2014
+* @version      4.10.3 10.02.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -278,7 +278,7 @@ define('_JSHOP_META_KEYWORDS','META-Tag Keywords');
 define('_JSHOP_META_DESCRIPTION','META-Tag Description');
 define('_JSHOP_MAIN_PAGE_TEXT','Text von der Hauptseite');
 define('_JSHOP_AGB','AGB');
-define('_JSHOP_RETURN_POLICY','Rückgaberecht');
+define('_JSHOP_RETURN_POLICY','Widerrufsbelehrung');
 define('_JSHOP_DECIMAL_COUNT','Dezimalzahlen :');
 define('_JSHOP_DECIMAL_COUNT_DESCRIPTION','Anzahl von angezeigten Dezimalzahlen (kann 0 sein)<br /><b>Abrundung erfolgt, falls der Wert hat mehr Dezimalzahlen</b>');
 define('_JSHOP_DECIMAL_SYMBOL','Dezimalsymbol :');
@@ -358,7 +358,7 @@ define('_JSHOP_SHOW_EXTRA_FIELDS', 'Produktcharakteristik anzeigen');
 define('_JSHOP_SHOW_EXTRA_FIELDS_FILTER', 'Produktcharakteristik anzeigen (Suche)');
 define('_JSHOP_HIDE_EXTRA_FIELDS', 'Hide Produktcharakteristik');
 define('_JSHOP_DEFAULT_COUNTRY', 'Default Land');
-define('_JSHOP_SHOW_RETURN_POLICY_IN_EMAIL_ORDER', 'Show "Rückgaberecht" in E-Mail bestellen');
+define('_JSHOP_SHOW_RETURN_POLICY_IN_EMAIL_ORDER', 'Show "Widerrufsbelehrung" in E-Mail bestellen');
 define('_JSHOP_CLIENT_ALLOW_CANCEL_ORDER', 'Der Kunde kann eine Bestellung stornieren');
 define('_JSHOP_MEYBY_SKIP_REGISTRATION', 'Vielleicht Überspringen der Registrierung');
 define('_JSHOP_WITHOUT_REGISTRATION', 'Ohne Registrierung');
@@ -864,7 +864,7 @@ define('_JSHP_SEOPAGE_search-result',"Resultat der Suche");
 define('_JSHP_SEOPAGE_myorder-detail',"Meine Bestellung Detail");
 define('_JSHP_SEOPAGE_vendors',"Vendors");
 define('_JSHP_SEOPAGE_content-agb',"AGB");
-define('_JSHP_SEOPAGE_content-return_policy',"Rückgaberecht");
+define('_JSHP_SEOPAGE_content-return_policy',"Widerrufsbelehrung");
 define('_JSHP_SEOPAGE_content-shipping',"Lieferart (content)");
 define('_JSHP_SEOPAGE_checkout-address',"Rechnungsadresse");
 define('_JSHP_SEOPAGE_checkout-payment',"Zahlungsart");
@@ -883,7 +883,7 @@ define('_JSHP_SEOPAGE_content-privacy_statement',"Datenschutzerklärung");
 define('_JSHP_STPAGE_home', "Main page (main category)");
 define('_JSHP_STPAGE_manufacturer', "Manufacturer");
 define('_JSHP_STPAGE_agb', "AGB");
-define('_JSHP_STPAGE_return_policy', "Rückgaberecht");
+define('_JSHP_STPAGE_return_policy', "Widerrufsbelehrung");
 define('_JSHP_STPAGE_order_email_descr', "Beschreibung des Auftrags für den Kunden (in E-Mail)");
 define('_JSHP_STPAGE_order_email_descr_end', "Beschreibung des Auftrags für den Kunden (in E-Mail, Ende)");
 define('_JSHP_STPAGE_INFO_order_email_descr', "erlaubt use vars {name}, {family}, {email}, {title}");

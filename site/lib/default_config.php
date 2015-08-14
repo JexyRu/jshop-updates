@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.10.1 19.06.2015
+* @version      4.10.3 10.07.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -206,6 +206,7 @@ $config->attr_display_addprice_all_sign = 0;
 $config->formatprice_style_currency_span = 0;
 $config->adm_prod_list_default_sorting = 'product_id';
 $config->adm_prod_list_default_sorting_dir = 'asc';
+$config->get_last_products_order_query = 'prod.product_id';
 $config->user_registered_download_sale_file = 0;
 $config->multi_charactiristic_separator = ", ";
 $config->advert = 1;

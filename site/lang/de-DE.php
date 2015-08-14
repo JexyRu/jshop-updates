@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.7.0 08.08.2014
+* @version      4.10.3 08.08.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -194,7 +194,7 @@ define('_JSHOP_BANK', 'Bank');
 define('_JSHOP_BIC_BIC', 'BIC');
 define('_JSHOP_IBAN', 'IBAN');
 define('_JSHOP_ERROR_PAYMENT', 'Fehler bei der Zahlungsmethode');
-define('_JSHOP_ORDER_FINISH', 'Kaufen');
+define('_JSHOP_ORDER_FINISH', 'Kostenpflichtig bestellen');
 define('_JSHOP_ERROR_PAYMENT_DATA', 'Bitte geben Sie die korrekten Zahlungsinformationen');
 
 define("_JSHOP_HI","Hallo");
