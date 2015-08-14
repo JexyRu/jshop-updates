@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.8.0 13.08.2013
+* @version      4.9.2 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -9,8 +9,8 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 <?php if ($this->allow_review || $this->config->show_hits){?>
-<div style="height:22px;">
-    <table align="right">
+<div class="block_rating_hits">
+    <table>
         <tr>
             <?php if ($this->config->show_hits){?>
                 <td><?php print _JSHOP_HITS?>: </td>

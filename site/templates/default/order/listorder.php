@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.8.0 13.08.2013
+* @version      4.9.2 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -42,7 +42,7 @@ defined('_JEXEC') or die('Restricted access');
                                 <b><?php print _JSHOP_EMAIL_SHIP_TO ?>:</b>
                                 <span><?php print $order->d_f_name ?> <?php print $order->d_l_name ?></span>
                             </div>
-                            <?php print $this->_tmp_ext_user_info;?>
+                            <?php print $order->_tmp_ext_user_info;?>
                         </div>
                         <div class="span3 products">
                             <div>
@@ -54,13 +54,14 @@ defined('_JEXEC') or die('Restricted access');
                                 <span><?php print formatprice($order->order_total, $order->currency_code)?></span>
                                 <?php print $order->_ext_price_html?>
                             </div>
-                            <?php print $this->_tmp_ext_prod_info;?>
+                            <?php print $order->_tmp_ext_prod_info;?>
                         </div>
                         <div class="span3 buttons">
                             <a class="btn" href = "<?php print $order->order_href ?>"><?php print _JSHOP_DETAILS?></a> 
-                            <?php print $this->_tmp_ext_but_info;?>
+                            <?php print $order->_tmp_ext_but_info;?>
                         </div>
                     </div>
+                    <?php print $order->_tmp_ext_row_end;?>
                 </div>
             </div>
         <?php } ?>

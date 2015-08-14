@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.8.0 13.08.2013
+* @version      4.9.2 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -129,9 +129,6 @@ defined('_JEXEC') or die('Restricted access');
             <div class="data">
                 <a class="button-img" href="<?php print $prod['href_delete']?>" onclick="return confirm('<?php print _JSHOP_CONFIRM_REMOVE?>')">
                     <img src = "<?php print $this->image_path ?>images/remove.png" alt = "<?php print _JSHOP_DELETE?>" title = "<?php print _JSHOP_DELETE?>" />
-                </a>
-                <a class="btn btn-danger" href = "<?php print $prod['href_delete'] ?>" onclick="return confirm('<?php print _JSHOP_REMOVE?>')">
-                    <?php print _JSHOP_REMOVE; ?>
                 </a>
             </div>
         </td>

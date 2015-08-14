@@ -40,7 +40,9 @@ defined('_JEXEC') or die('Restricted access');
         <?php }?>
 
         <?php if ($this->allow_review){?>
-            <table class="review_mark"><tr><td><?php print showMarkStar($product->average_rating);?></td></tr></table>
+            <div class="review_mark">
+                <?php print showMarkStar($product->average_rating);?>
+            </div>
             <div class="count_commentar">
                 <?php print sprintf(_JSHOP_X_COMENTAR, $product->reviews_count);?>
             </div>

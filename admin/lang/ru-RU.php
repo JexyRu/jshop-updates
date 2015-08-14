@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 10.02.2014
+* @version      4.9.2 10.02.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -181,7 +181,6 @@ define('_JSHOP_COUPON_ERROR_DELETED','Ошибка при удалении ку�
 define('_JSHOP_ERROR_PAYMENT_DELETED','Ошибка при удалении способа оплаты');
 define('_JSHOP_ERROR_SHIPPING_DELETED','Ошибка при удалении способа доставки');
 define('_JSHOP_ORDER_STATUS_ERROR_DELETED','Ошибка при удалении статуса заказа');
-define('_JSHOP_ERROR_COUPON_EXIST','Купон уже существует');
 define('_JSHOP_ERROR_COUPON_EXIST','Купон уже существует');
 define('_JSHOP_ERROR_CREATE_THUMBAIL','Error create thumbail image');
 define('_JSHOP_ERROR_ALIAS_ALREADY_EXIST','Ошибка. Псевдоним уже существует');

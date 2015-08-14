@@ -386,8 +386,10 @@ td.reviews{
     font-size: 18px;
     margin-bottom: 5px;
 }
-.jshop_list_product .product table.review_mark{
-    margin: 0px auto;
+.jshop_list_product .product .review_mark{
+    width: 80px;
+    margin-left:auto;
+    margin-right: auto;
 }
 .jshop_list_product .product .description{
     padding-bottom: 5px;
@@ -481,9 +483,6 @@ td.reviews{
 .productfull .plusshippinginfo a{
     font-size:11px;
 }
-.productfull .prod_buttons .buttons{
-    padding-left:10px;
-}
 .productfull .prod_buttons {
     margin-top:5px;
 }
@@ -496,9 +495,19 @@ td.reviews{
 .productfull .extra_fields{
     margin-top: 5px;
 }
+
+.productfull .prod_qty{
+    display: inline-block;
+}
 .productfull .prod_qty_input{
     padding-left: 5px;
+    display: inline-block;    
 }
+.productfull .buttons{
+    padding-left:10px;
+    display: inline-block;
+}
+
 .productfull .qty_in_stock{
     margin-bottom: 10px;
 }
@@ -848,6 +857,7 @@ span.prod_attr_img img{
 .login_block .form-horizontal .control-label{
     width: 100px;
     text-align: left;
+    float: left;
 }
 .login_block .form-horizontal .controls {
     margin-left: 100px;
@@ -869,6 +879,7 @@ span.prod_attr_img img{
 .form-horizontal .form_sort_count .control-label{
     text-align: left;
     width: 85px;
+    float:left;
 }
 .form-horizontal .form_sort_count .controls{
     margin-left: 88px;
@@ -926,6 +937,27 @@ span.prod_attr_img img{
     height:70px;
     width: 100%;
     max-width:320px;
+}
+.block_rating_hits{
+    height:22px;
+}
+.block_rating_hits table{
+    float:right;
+    width: auto;
+    border:0px;
+}
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+    line-height: 0;
 }
 
 @media (min-width: 768px){
@@ -1104,29 +1136,9 @@ span.prod_attr_img img{
     .cart .product_name a{
         display:block;
     }
-    .cart .remove .btn-danger{
-        display: inline-block;
-    }
-    .cart .remove .button-img{
-        display: none;
-    }
-    .cart .cart_reload img{
-        display: none;
-    }
-    .cart .cart_reload a.btn{
-        display: inline-block;
-        margin-left: 15px;
-    }
     .jshop_img_description_center .mobile-cart{
         display: none;
-    }
-    .cart .remove_to_cart .btn-primary{
-        display: inline-block;
-    }
-    .cart .remove_to_cart .button-img{
-        display: none;
-    }
-    
+    }   
     .login_block .form-horizontal .controls {
         margin-left: 160px;
     }
@@ -1137,5 +1149,65 @@ span.prod_attr_img img{
         border:1px solid #ccc;
         padding:5px;
         border-radius:4px;
+    }
+    .cart_block_discount .name{
+        float:none;
+    }
+    .cart_block_discount input{
+        display: block;
+        margin-top:10px;
+    }
+}
+@media (max-width: 480px) {
+    .form-horizontal .form_sort_count .controls .inputbox {
+        width: 115px;
+    }
+    .form-horizontal .form_sort_count .controls {
+        margin-right: 0px;
+    }
+    .form-horizontal .form_sort_count .controls .input {
+        width: 70px;
+    }
+    .block_rating_hits table{
+        float:left;
+    }
+    .productfull .prod_qty{
+        display: block;
+    }
+    .productfull .prod_qty_input{
+        padding-left: 0px;
+        margin-top:10px;
+        display: block;    
+    }
+    .productfull .buttons{
+        padding-left:0px;
+        display: block;
+    }
+    .productfull .buttons input{
+        display: block;
+        margin-top:10px;
+    }
+    .form-horizontal .other_delivery_adress .control-label{
+        float: none;
+    }
+    .jshop_payment_method td, .jshop_payment_method tr{
+        display: block;
+    }
+    .jshop .downlod_order_invoice {
+        float: none;
+        padding-bottom:10px;
+    }
+    .form-horizontal .form_sort_count .control-label{
+        float:left;
+        padding-top:5px;
+    }
+    .login_block .form-horizontal .control-label{
+        float:none;
+    }
+    .login_block .form-horizontal .controls{
+        margin-left:0px;
+    }
+    .pagelogin .register_block .logintext, .pagelogin .register_block .block_button_register {
+        margin-left: 0px;
     }
 }

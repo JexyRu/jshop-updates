@@ -1,6 +1,6 @@
 <?php
 /**
- * @version      4.8.0 22.10.2014
+ * @version      4.9.2 22.10.2014
  * @author       MAXXmarketing GmbH
  * @package      Jshopping
  * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -104,7 +104,6 @@ $countprod = count($this->products);
                 <?php print $prod['_qty_unit']; ?>
                 <span class = "cart_reload">
                     <img src="<?php print $this->image_path?>images/reload.png" title="<?php print _JSHOP_UPDATE_CART ?>" alt = "<?php print _JSHOP_UPDATE_CART ?>" onclick="document.updateCart.submit();" />
-                    <a class="btn" onclick="document.updateCart.submit();"><?php print _JSHOP_UPDATE_CART ?></a>
                 </span>
             </div>
         </td>
@@ -127,9 +126,6 @@ $countprod = count($this->products);
             <div class="data">
                 <a class="button-img" href="<?php print $prod['href_delete']?>" onclick="return confirm('<?php print _JSHOP_CONFIRM_REMOVE?>')">
                     <img src = "<?php print $this->image_path ?>images/remove.png" alt = "<?php print _JSHOP_DELETE?>" title = "<?php print _JSHOP_DELETE?>" />
-                </a>
-                <a class="btn btn-danger" href="<?php print $prod['href_delete'] ?>" onclick="return confirm('<?php print _JSHOP_CONFIRM_REMOVE ?>')">
-                    <?php print _JSHOP_REMOVE; ?>
                 </a>
             </div>
         </td>

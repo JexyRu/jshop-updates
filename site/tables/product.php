@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.9.2 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -608,7 +608,7 @@ class jshopProduct extends JTableAvto{
         }else{
             $this->product_basic_price_wvu = $this->getWeight_volume_units();
         }
-        $this->product_basic_price_weight = $this->product_basic_price_wvu * $unit->qty;
+        $this->product_basic_price_weight = $this->product_basic_price_wvu / $unit->qty;
         if ($jshopConfig->calc_basic_price_from_product_price){
             $this->product_basic_price_calculate = $this->product_price_wp / $this->product_basic_price_weight;
         }else{

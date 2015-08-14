@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 05.11.2013
+* @version      4.9.2 05.11.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -299,30 +299,28 @@ include(dirname(__FILE__)."/load.js.php");
         <?php print $this->_tmp_product_html_before_buttons;?>
         
         <?php if (!$this->hide_buy){?>                         
-            <table class="prod_buttons" style="<?php print $this->displaybuttons?>">
-                <tr>
-                    <td class="prod_qty">
-                        <?php print _JSHOP_QUANTITY?>:
-                    </td>
-                    
-                    <td class="prod_qty_input">
-                        <input type="text" name="quantity" id="quantity" onkeyup="reloadPrices();" class="inputbox" value="<?php print $this->default_count_product?>" /><?php print $this->_tmp_qty_unit;?>
-                    </td>
-                            
-                    <td class="buttons">            
-                        <input type="submit" class="btn btn-primary button" value="<?php print _JSHOP_ADD_TO_CART?>" onclick="jQuery('#to').val('cart');" />
+            <div class="prod_buttons" style="<?php print $this->displaybuttons?>">
+                
+                <div class="prod_qty">
+                    <?php print _JSHOP_QUANTITY?>:
+                </div>
+                
+                <div class="prod_qty_input">
+                    <input type="text" name="quantity" id="quantity" onkeyup="reloadPrices();" class="inputbox" value="<?php print $this->default_count_product?>" /><?php print $this->_tmp_qty_unit;?>
+                </div>
                         
-                        <?php if ($this->enable_wishlist){?>
-                            <input type="submit" class="btn button" value="<?php print _JSHOP_ADD_TO_WISHLIST?>" onclick="jQuery('#to').val('wishlist');" />
-                        <?php }?>
-                        
-                        <?php print $this->_tmp_product_html_buttons;?>
-                    </td>
+                <div class="buttons">            
+                    <input type="submit" class="btn btn-primary button" value="<?php print _JSHOP_ADD_TO_CART?>" onclick="jQuery('#to').val('cart');" />
                     
-                    <td id="jshop_image_loading" style="display:none">
-                    </td>
-                </tr>
-            </table>
+                    <?php if ($this->enable_wishlist){?>
+                        <input type="submit" class="btn button" value="<?php print _JSHOP_ADD_TO_WISHLIST?>" onclick="jQuery('#to').val('wishlist');" />
+                    <?php }?>
+                    
+                    <?php print $this->_tmp_product_html_buttons;?>
+                </div>
+                
+                <div id="jshop_image_loading" style="display:none"></div>
+            </div>
         <?php }?>
         
         <?php print $this->_tmp_product_html_after_buttons;?>
