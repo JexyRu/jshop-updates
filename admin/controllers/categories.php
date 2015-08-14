@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 05.11.2013
+* @version      4.10.0 05.11.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -53,6 +53,7 @@ class JshoppingControllerCategories extends JControllerLegacy{
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
 		$view->assign('text_search', $text_search);
+        $view->sidebar = JHtmlSidebar::render();
         $dispatcher->trigger('onBeforeDisplayListCategoryView', array(&$view));
         $view->displayList();
     }

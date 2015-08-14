@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.1 09.01.2015
+* @version      4.10.0 18.04.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -36,10 +36,14 @@ function jshoppingBuildRoute(&$query){
     if (!isset($query['task'])){
         $query['task'] = '';
     }
+    unset($query['layout']);
     
     if (isset($query['Itemid']) && $query['Itemid'] && isset($query['controller']) && $query['task']==""){
         $menuItem = $menu->getItem($query['Itemid']);
         $micontroller = $menuItem->query['controller'];
+        if (!$micontroller){
+            $micontroller = $menuItem->query['view'];
+        }
         if ($micontroller && $query['controller'] && $micontroller==$query['controller']){
             unset($query['controller']);       
         }

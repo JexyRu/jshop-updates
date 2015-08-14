@@ -1,15 +1,19 @@
 <?php
 /**
-* @version      4.3.1 13.08.2013
+* @version      4.10.0 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
 * @license      GNU/GPL
 */
 defined('_JEXEC') or die('Restricted access');
-displaySubmenuOptions("shippings");
 $rows=$this->rows;
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuOptions("shippings");?>
 <form action="index.php?option=com_jshopping&controller=shippingextprice" method="post" name="adminForm" id="adminForm">
 <?php print $this->tmp_html_start?>
 <table class="table table-striped">
@@ -64,16 +68,20 @@ foreach($rows as $i=>$row){?>
     <span><?php if ($i != 0) echo JHtml::_('jgrid.orderUp', $i, "orderup");?></span>
     <span><?php if ($i != $count - 1) echo JHtml::_('jgrid.orderDown', $i, "orderdown");?></span>
    </td>
-   <td align="center">     
+   <td class="center">     
      <?php echo JHtml::_('jgrid.published', $row->published, $i);?>
    </td>
-   <td align="center">
-        <a href='index.php?option=com_jshopping&controller=shippingextprice&task=edit&id=<?php print $row->id;?>'><img src='components/com_jshopping/images/icon-16-edit.png'></a>
+   <td class="center">
+        <a class="btn btn-micro" href='index.php?option=com_jshopping&controller=shippingextprice&task=edit&id=<?php print $row->id;?>'>
+            <i class="icon-edit"></i>
+        </a>
    </td>
-   <td align="center">
-    <a href='index.php?option=com_jshopping&controller=shippingextprice&task=remove&id=<?php print $row->id?>' onclick="return confirm('<?php print _JSHOP_DELETE?>')"><img src='components/com_jshopping/images/publish_r.png'></a>
+   <td class="center">
+    <a class="btn btn-micro" href='index.php?option=com_jshopping&controller=shippingextprice&task=remove&id=<?php print $row->id?>' onclick="return confirm('<?php print _JSHOP_DELETE?>')">
+        <i class="icon-delete"></i>
+    </a>
    </td>
-   <td align="center">
+   <td class="center">
     <?php print $row->id;?>
    </td>
   </tr>
@@ -85,3 +93,4 @@ foreach($rows as $i=>$row){?>
 <input type="hidden" name="boxchecked" value="0" />
 <?php print $this->tmp_html_end?>
 </form>
+</div>

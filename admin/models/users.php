@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.5.0 31.05.2014
+* @version      4.10.0 31.05.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -47,9 +47,9 @@ class JshoppingModelUsers extends JModelLegacy{
 
     function getUsers(){
         $db = JFactory::getDBO();
-        $query = "SELECT U.`user_id`, concat(U.`f_name`,' ',U.`l_name`) as `name`
+        $query = "SELECT U.`user_id`, IF (concat(U.`f_name`,U.`l_name`)='', U.firma_name, concat(U.`f_name`,' ',U.`l_name`)) as `name`
                   FROM `#__jshopping_users` as U INNER JOIN `#__users` AS UM ON U.user_id=UM.id
-                  ORDER BY U.`f_name`, U.`l_name`";
+                  ORDER BY name";
         extract(js_add_trigger(get_defined_vars(), "before"));
         $db->setQuery($query);
         return $db->loadObjectList();

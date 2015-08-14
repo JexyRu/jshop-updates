@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.9.3 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -63,9 +63,9 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         $config_fields = $tmp_fields['address'];
         $count_filed_delivery = $jshopConfig->getEnableDeliveryFiledRegistration('address');
 
-        $checkout_navigator = $this->_showCheckoutNavigation(2);
+        $checkout_navigator = $checkout->showCheckoutNavigation(2);
         if ($jshopConfig->show_cart_all_step_checkout){
-            $small_cart = $this->_showSmallCart(2);
+            $small_cart = $checkout->showSmallCart(2);
         }else{
             $small_cart = '';
         }
@@ -232,9 +232,9 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         }
         setMetaData($seodata->title, $seodata->keyword, $seodata->description);
         
-        $checkout_navigator = $this->_showCheckoutNavigation(3);
+        $checkout_navigator = $checkout->showCheckoutNavigation(3);
         if ($jshopConfig->show_cart_all_step_checkout){
-            $small_cart = $this->_showSmallCart(3);
+            $small_cart = $checkout->showSmallCart(3);
         }else{
             $small_cart = '';
         }
@@ -454,9 +454,9 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         $user = JFactory::getUser();
         $adv_user = JSFactory::getUser();
 
-        $checkout_navigator = $this->_showCheckoutNavigation(4);
+        $checkout_navigator = $checkout->showCheckoutNavigation(4);
         if ($jshopConfig->show_cart_all_step_checkout){
-            $small_cart = $this->_showSmallCart(4);
+            $small_cart = $checkout->showSmallCart(4);
         }else{
             $small_cart = '';
         }
@@ -775,8 +775,8 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         $config_fields = $tmp_fields['address'];
         $count_filed_delivery = $jshopConfig->getEnableDeliveryFiledRegistration('address');
         
-        $checkout_navigator = $this->_showCheckoutNavigation(5);
-        $small_cart = $this->_showSmallCart(5);
+        $checkout_navigator = $checkout->showCheckoutNavigation(5);
+        $small_cart = $checkout->showSmallCart(5);
 
 		$view_name = "checkout";
         $view_config = array("template_path"=>$jshopConfig->template_path.$jshopConfig->template."/".$view_name);
@@ -1067,7 +1067,7 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         // user click back in payment system 
         $jshop_send_end_form = $session->get('jshop_send_end_form');
         if ($jshop_send_end_form == 1){
-            $this->_cancelPayOrder($order_id);
+            $this->cancelPayOrder($order_id);
             return 0;
         }
 
@@ -1153,7 +1153,7 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         $session->set('jshop_send_end_form', 0);
         
         if ($act == "cancel"){
-            $this->_cancelPayOrder($order_id);
+            $this->cancelPayOrder($order_id);
             return 0;
         }
         
@@ -1311,167 +1311,7 @@ class JshoppingControllerCheckout extends JControllerLegacy{
         $checkout->deleteSession();
     }
 
-    function _showSmallCart($step = 0){
-        $jshopConfig = JSFactory::getConfig();
-        $session = JFactory::getSession();
-        
-        $cart = JSFactory::getModel('cart', 'jshop');
-        $cart->load();
-        $cart->addLinkToProducts(0);
-        $cart->setDisplayFreeAttributes();
-        
-        if ($step == 5){
-            $cart->setDisplayItem(1, 1);
-        }elseif ($step == 4 && !$jshopConfig->step_4_3) {
-            $cart->setDisplayItem(0, 1);
-        }elseif ($step == 3 && $jshopConfig->step_4_3){
-            $cart->setDisplayItem(1, 0);
-		}else{
-            $cart->setDisplayItem(0, 0);
-        }
-        $cart->updateDiscountData();
-
-        $weight_product = $cart->getWeightProducts();
-        if ($weight_product==0 && $jshopConfig->hide_weight_in_cart_weight0){
-            $jshopConfig->show_weight_order = 0;
-        }
-        
-        $dispatcher = JDispatcher::getInstance();
-        $dispatcher->trigger( 'onBeforeDisplaySmallCart', array(&$cart) );
-                
-        $view_name = "cart";
-        $view_config = array("template_path"=>$jshopConfig->template_path.$jshopConfig->template."/".$view_name);
-        $view = $this->getView($view_name, getDocumentType(), '', $view_config);
-        $view->setLayout("checkout");
-        $view->assign('step', $step);
-        $view->assign('config', $jshopConfig);
-        $view->assign('products', $cart->products);
-        $view->assign('summ', $cart->getPriceProducts());
-        $view->assign('image_product_path', $jshopConfig->image_product_live_path);
-        $view->assign('no_image', $jshopConfig->noimage);
-        $view->assign('discount', $cart->getDiscountShow());
-        $view->assign('free_discount', $cart->getFreeDiscount());
-        $deliverytimes = JSFactory::getAllDeliveryTime();
-        $view->assign('deliverytimes', $deliverytimes);
-        
-		$lang = JSFactory::getLang();
-        $name = $lang->get("name");
-        $payment_method_id = $cart->getPaymentId();
-        if ($payment_method_id){
-            $pm_method = JSFactory::getTable('paymentMethod', 'jshop');            
-            $pm_method->load($payment_method_id);
-            $payment_name = $pm_method->$name;
-        }else{
-            $payment_name = '';
-        }
-        $view->assign('payment_name', $payment_name);
-		
-        if ($step == 5){
-            if (!$jshopConfig->without_shipping){
-                $view->assign('summ_delivery', $cart->getShippingPrice());
-                if ($cart->getPackagePrice()>0 || $jshopConfig->display_null_package_price){
-                    $view->assign('summ_package', $cart->getPackagePrice());
-                }
-				$view->assign('summ_payment', $cart->getPaymentPrice());
-                $fullsumm = $cart->getSum(1,1,1);
-                $tax_list = $cart->getTaxExt(1,1,1);
-            }else{
-				$view->assign('summ_payment', $cart->getPaymentPrice());
-                $fullsumm = $cart->getSum(0,1,1);
-                $tax_list = $cart->getTaxExt(0,1,1);
-            }
-        }elseif($step == 4 && !$jshopConfig->step_4_3){
-            $view->assign('summ_payment', $cart->getPaymentPrice());
-            $fullsumm = $cart->getSum(0,1,1);
-            $tax_list = $cart->getTaxExt(0,1,1);
-        }elseif($step == 3 && $jshopConfig->step_4_3){
-			$view->assign('summ_delivery', $cart->getShippingPrice());
-            if ($cart->getPackagePrice()>0 || $jshopConfig->display_null_package_price){
-                $view->assign('summ_package', $cart->getPackagePrice());
-            }
-			$fullsumm = $cart->getSum(1,1,0);
-            $tax_list = $cart->getTaxExt(1,1,0);
-		}
-		else{
-            $fullsumm = $cart->getSum(0, 1, 0);
-            $tax_list = $cart->getTaxExt(0, 1, 0);
-        }
-        
-        $show_percent_tax = 0;
-        if (count($tax_list)>1 || $jshopConfig->show_tax_in_product) $show_percent_tax = 1;
-        if ($jshopConfig->hide_tax) $show_percent_tax = 0;
-        $hide_subtotal = 0;
-        if ($step == 5){
-            if (($jshopConfig->hide_tax || count($tax_list)==0) && !$cart->rabatt_summ && $jshopConfig->without_shipping && $cart->getPaymentPrice()==0) $hide_subtotal = 1;
-        }elseif ($step == 4 && !$jshopConfig->step_4_3) {
-            if (($jshopConfig->hide_tax || count($tax_list)==0) && !$cart->rabatt_summ && $cart->getPaymentPrice()==0) $hide_subtotal = 1;
-        }elseif ($step == 3 && $jshopConfig->step_4_3){
-            if (($jshopConfig->hide_tax || count($tax_list)==0) && !$cart->rabatt_summ && $jshopConfig->without_shipping) $hide_subtotal = 1;
-        }else{
-            if (($jshopConfig->hide_tax || count($tax_list)==0) && !$cart->rabatt_summ) $hide_subtotal = 1;
-        }
-        
-        $text_total = _JSHOP_PRICE_TOTAL;
-        if ($step == 5){
-            $text_total = _JSHOP_ENDTOTAL;
-            if (($jshopConfig->show_tax_in_product || $jshopConfig->show_tax_product_in_cart) && (count($tax_list)>0)){
-                $text_total = _JSHOP_ENDTOTAL_INKL_TAX;
-            }
-        }
-
-        $view->assign('tax_list', $tax_list);
-        $view->assign('fullsumm', $fullsumm);
-        $view->assign('show_percent_tax', $show_percent_tax);
-        $view->assign('hide_subtotal', $hide_subtotal);
-        $view->assign('text_total', $text_total);
-        $view->assign('weight', $weight_product);
-        $dispatcher->trigger('onBeforeDisplayCheckoutCartView', array(&$view));
-    return $view->loadTemplate();
-    }
-    
-    function _showCheckoutNavigation($step){
-        $jshopConfig = JSFactory::getConfig();
-		if ($jshopConfig->step_4_3){
-			$array_navigation_steps = array('2'=>_JSHOP_STEP_ORDER_2, '4'=>_JSHOP_STEP_ORDER_4, '3'=>_JSHOP_STEP_ORDER_3, '5'=>_JSHOP_STEP_ORDER_5);
-        }else{
-			$array_navigation_steps = array('2' => _JSHOP_STEP_ORDER_2, '3' => _JSHOP_STEP_ORDER_3, '4' => _JSHOP_STEP_ORDER_4, '5' => _JSHOP_STEP_ORDER_5);
-		}
-        $output = array();
-        $cssclass = array();
-        if ($jshopConfig->without_shipping || $jshopConfig->hide_shipping_step) unset($array_navigation_steps[4]);
-        if ($jshopConfig->without_payment || $jshopConfig->hide_payment_step) unset($array_navigation_steps[3]);
-
-        foreach($array_navigation_steps as $key=>$value){
-            if ($key < $step && !($jshopConfig->step_4_3 && $key==3 && $step==4) || ($jshopConfig->step_4_3 && $key==4 && $step==3)){
-                $output[$key] = '<span class="not_active_step"><a href="'.SEFLink('index.php?option=com_jshopping&controller=checkout&task=step'.$key,0,0,$jshopConfig->use_ssl).'">'.$value.'</a></span>';
-                $cssclass[$key] = "prev";
-            }else{
-                if ($key == $step){
-                    $output[$key] = '<span id="active_step"  class="active_step">'.$value.'</span>';
-                    $cssclass[$key] = "active";
-                }else{
-                    $output[$key] = '<span class="not_active_step">'.$value.'</span>';
-                    $cssclass[$key] = "next";
-                }
-            }
-        }
-
-        $dispatcher = JDispatcher::getInstance();
-        $dispatcher->trigger('onBeforeDisplayCheckoutNavigator', array(&$output, &$array_navigation_steps, &$step));
-
-        $view_name = "checkout";
-        $view_config = array("template_path"=>$jshopConfig->template_path.$jshopConfig->template."/".$view_name);
-        $view = $this->getView($view_name, getDocumentType(), '', $view_config);
-        $view->setLayout("menu");
-        $view->assign('steps', $output);
-		$view->assign('step', $step);
-        $view->assign('cssclass', $cssclass);
-        $view->assign('array_navigation_steps', $array_navigation_steps);
-        $dispatcher->trigger('onAfterDisplayCheckoutNavigator', array(&$view));
-    return $view->loadTemplate();
-    }
-
-    function _cancelPayOrder($order_id=""){
+    function cancelPayOrder($order_id=""){
         $jshopConfig = JSFactory::getConfig();
         $checkout = JSFactory::getModel('checkout', 'jshop');
         $wmiframe = JRequest::getInt("wmiframe");

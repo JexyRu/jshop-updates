@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      2.9.4 31.07.2010
+* @version      4.10.4 31.07.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -35,7 +35,8 @@ class JshoppingControllerOrderStatus extends JControllerLegacy{
         $view->assign('rows', $rows);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);        
-		
+		$view->sidebar = JHtmlSidebar::render();
+        
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayOrderStatus', array(&$view));
 		$view->displayList();

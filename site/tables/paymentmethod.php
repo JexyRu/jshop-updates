@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.10.0 01.05.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -90,9 +90,11 @@ class jshopPaymentMethod extends JTableAvto {
         return $taxes[$this->tax_id];
     }
     
-    function calculateTax(){
+    function calculateTax($price = 0){
         $jshopConfig = JSFactory::getConfig();
-        $price = $this->getPrice();
+        if (!$price){
+            $price = $this->getPrice();
+        }
         $pricetax = getPriceTaxValue($price, $this->getTax(), $jshopConfig->display_price_front_current);
         return $pricetax;
     }
@@ -133,7 +135,7 @@ class jshopPaymentMethod extends JTableAvto {
             }    
         }else{
             $taxes = array();
-            $taxes[$this->getTax()] = $this->calculateTax();
+            $taxes[$this->getTax()] = $this->calculateTax($price);
         }        
     return $taxes;
     }

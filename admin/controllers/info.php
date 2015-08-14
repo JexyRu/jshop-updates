@@ -28,6 +28,7 @@ class JshoppingControllerInfo extends JControllerLegacy{
         $view->setLayout("info");
 		$view->assign("data",$data);
         $view->assign("update",$update);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayInfo', array(&$view));

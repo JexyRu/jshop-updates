@@ -425,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `#__jshopping_shipping_method` (
 `payments` varchar(255) NOT NULL,
 `image` VARCHAR(255) NOT NULL,
 `ordering` int(6) NOT NULL,
-`params` text NOT NULL,
+`params` LONGTEXT NOT NULL,
 PRIMARY KEY (`shipping_id`)
 ) /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci*/;
 
@@ -434,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `#__jshopping_shipping_ext_calc`(
 `name` varchar(100) NOT NULL,
 `alias` varchar(100) NOT NULL,
 `description` text NOT NULL,
-`params` text NOT NULL,
+`params` LONGTEXT NOT NULL,
 `shipping_method` text NOT NULL,
 `published` tinyint(1) NOT NULL,
 `ordering` int(6) NOT NULL,
@@ -449,7 +449,7 @@ CREATE TABLE IF NOT EXISTS `#__jshopping_shipping_method_price` (
 `package_tax_id` int(11) NOT NULL,
 `package_stand_price` DECIMAL(14,4) NOT NULL,
 `delivery_times_id` int(11) NOT NULL,
-`params` text NOT NULL
+`params` LONGTEXT NOT NULL
 ) /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci*/;
 
 CREATE TABLE IF NOT EXISTS `#__jshopping_shipping_method_price_weight` (

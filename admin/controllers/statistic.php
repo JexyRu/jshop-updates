@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      2.8.0 20.12.2010
+* @version      4.10.0 20.12.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -14,10 +14,10 @@ class JshoppingControllerStatistic extends JControllerLegacy{
 
     function __construct( $config = array() ){
         parent::__construct( $config );
-
         addSubmenu("other");
         checkAccessController("statistic");
     }
+    
     function display($cachable = false, $urlparams = false){
         
         $jshopConfig = JSFactory::getConfig(); 
@@ -67,7 +67,8 @@ class JshoppingControllerStatistic extends JControllerLegacy{
         $view->assign('stuff1', $stuff1);   
         $view->assign('stuff2', $stuff2);  
         $view->assign('stuff3', $stuff3); 
-        $view->assign('usergroups', $usergroups); 
+        $view->assign('usergroups', $usergroups);
+        $view->sidebar = JHtmlSidebar::render(); 
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayStatistic', array(&$view));

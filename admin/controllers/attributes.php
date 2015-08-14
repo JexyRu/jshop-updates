@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 24.07.2013
+* @version      4.10.0 24.07.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -38,6 +38,7 @@ class JshoppingControllerAttributes extends JControllerLegacy{
         $view->assign('rows', $rows);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayAttributes', array(&$view));
@@ -102,14 +103,19 @@ class JshoppingControllerAttributes extends JControllerLegacy{
 	function save(){
         $db = JFactory::getDBO(); 
 		$attr_id = JRequest::getInt('attr_id');
-        
-        
+
         $dispatcher = JDispatcher::getInstance();
         
         $attribut = JSFactory::getTable('attribut', 'jshop');    
         $post = JRequest::get("post");
         
-        $dispatcher->trigger( 'onBeforeSaveAttribut', array(&$post) );
+        $_lang = JSFactory::getModel("languages");
+        $languages = $_lang->getAllLanguages(1);
+        foreach($languages as $lang){
+            $post['description_'.$lang->language] = JRequest::getVar('description_'.$lang->language, '', 'post', "string", 2);
+        }
+        
+        $dispatcher->trigger('onBeforeSaveAttribut', array(&$post));
         
         if (!$attr_id){
             $query = "SELECT MAX(attr_ordering) AS attr_ordering FROM `#__jshopping_attr`";
@@ -146,18 +152,16 @@ class JshoppingControllerAttributes extends JControllerLegacy{
             $attr_id = $attribut->attr_id;
         }
         
-        
-        $dispatcher->trigger( 'onAfterSaveAttribut', array(&$attribut) );
+        $dispatcher->trigger('onAfterSaveAttribut', array(&$attribut));
         
 		if ($this->getTask()=='apply'){
             $this->setRedirect("index.php?option=com_jshopping&controller=attributes&task=edit&attr_id=".$attr_id); 
         }else{
             $this->setRedirect("index.php?option=com_jshopping&controller=attributes");
         }
-        
 	}
 	
-	function remove() {
+	function remove(){
 		$cid = JRequest::getVar("cid");
         $jshopConfig = JSFactory::getConfig();
 		$db = JFactory::getDBO();

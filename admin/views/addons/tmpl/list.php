@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.6.1 13.08.2013
+* @version      4.10.0 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -9,11 +9,15 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 <?php
-displaySubmenuOptions();
 $rows=$this->rows;
 $count=count($rows);
 $i=0;
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuOptions();?>
 <form action="index.php?option=com_jshopping&controller=addons" method="post" name="adminForm" id="adminForm">
 <?php print $this->tmp_html_start?>
 <table class="table table-striped">
@@ -91,3 +95,4 @@ $i=0;
 <input type="hidden" name="boxchecked" value="0" />
 <?php print $this->tmp_html_end?>
 </form>
+</div>

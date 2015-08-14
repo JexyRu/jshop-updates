@@ -207,6 +207,8 @@ $config->multi_charactiristic_separator = ", ";
 $config->advert = 1;
 $config->hide_weight_in_cart_weight0 = 1;
 $config->hide_from_basic_price = 0;
+$config->ext_menu_checkout_step = 0;
+$config->product_hide_price_null = 0;
 
 $config->product_search_fields = array(
     'prod.ml:name',
@@ -320,7 +322,8 @@ $checkout_other_config = array(
     'return_policy_for_product',
     'no_return_all',
     'show_return_policy_text_in_email_order',
-    'show_return_policy_text_in_pdf'
+    'show_return_policy_text_in_pdf',
+    'ext_menu_checkout_step'
 );
     
 $catprod_other_config = array(
@@ -339,7 +342,8 @@ $catprod_other_config = array(
     'display_short_descr_multiline',
     'count_manufacturer_to_row',
     'attribut_dep_sorting_in_product',
-    'attribut_nodep_sorting_in_product'
+    'attribut_nodep_sorting_in_product',
+    'product_hide_price_null'
 );
 
 $image_other_config = array(

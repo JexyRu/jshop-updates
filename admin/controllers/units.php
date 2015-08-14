@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      2.9.4 02.11.2010
+* @version      4.10.0 02.11.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -27,7 +27,8 @@ class JshoppingControllerUnits extends JControllerLegacy{
         
 		$view=$this->getView("units", 'html');
         $view->setLayout("list");		
-        $view->assign('rows', $rows);       
+        $view->assign('rows', $rows);
+        $view->sidebar = JHtmlSidebar::render();       
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayUnits', array(&$view)); 		

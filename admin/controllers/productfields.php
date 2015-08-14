@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 03.12.2011
+* @version      4.10.0 03.12.2011
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -69,7 +69,7 @@ class JshoppingControllerProductFields extends JControllerLegacy{
         $groups = $_productfieldgroups->getList();
         $groups0 = array();
         $groups0[] = JHTML::_('select.option', 0, "- "._JSHOP_GROUP." -", 'id', 'name');        
-        $lists['group'] = JHTML::_('select.genericlist', array_merge($groups0, $groups),'group','onchange="document.adminForm.submit();"','id','name', $group);
+        $lists['group'] = JHTML::_('select.genericlist', array_merge($groups0, $groups), 'group', 'class="chosen-select" onchange="document.adminForm.submit();"', 'id', 'name', $group);
         
         $types = array(_JSHOP_LIST, _JSHOP_TEXT);
 
@@ -82,6 +82,7 @@ class JshoppingControllerProductFields extends JControllerLegacy{
 		$view->assign('text_search', $text_search);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayProductField', array(&$view));

@@ -554,6 +554,7 @@ function addOrderItemRow(){
     html+='<input type="hidden" name="product_id['+i+']" value="" />';    
     html+='<input type="hidden" name="delivery_times_id['+i+']" value="" />';
     html+='<input type="hidden" name="thumb_image['+i+']" value="" />';
+    html+='<input type="hidden" name="attributes['+i+']" value="" />';
     if (admin_order_edit_more){
         html+='<div>'+lang_weight+' <input type="text" name="weight['+i+']" value="" /></div>';
         html+='<div>'+lang_vendor+' ID <input type="text" name="vendor_id['+i+']" value="" /></div>';
@@ -579,23 +580,64 @@ function addOrderItemRow(){
         parse: 'rel'
     });
 }
-function loadProductInfoRowOrderItem(pid, num, currency_id){
-	var url = 'index.php?option=com_jshopping&controller=products&task=loadproductinfo&product_id='+pid+'&currency_id='+currency_id+'&ajax=1';
+
+function loadProductInfoRowOrderItem(pid, num, currency_id, display_price, user_id, load_attribute){
+	var url = 'index.php?option=com_jshopping&controller=products&task=loadproductinfo&product_id='+pid+'&id_currency='+currency_id+'&ajax=1&display_price='+display_price;
+    if (user_id>0){
+        url+='&admin_load_user_id='+user_id;
+    }
+	if (typeof(load_attribute)==='undefined'){
+		load_attribute = -1;
+	}
     jQuery.getJSON(url, function(json){
         jQuery("input[name=product_id\\["+num+"\\]]").val(json.product_id);
         jQuery("input[name=product_name\\["+num+"\\]]").val(json.product_name);
         jQuery("input[name=product_ean\\["+num+"\\]]").val(json.product_ean);
-        jQuery("input[name=product_item_price\\["+num+"\\]]").val(json.product_price);
-        
+        jQuery("input[name=product_item_price\\["+num+"\\]]").val(json.product_price);        
         jQuery("input[name=product_tax\\["+num+"\\]]").val(json.product_tax);
         jQuery("input[name=weight\\["+num+"\\]]").val(json.product_weight);
         jQuery("input[name=delivery_times_id\\["+num+"\\]]").val(json.delivery_times_id);
         jQuery("input[name=vendor_id\\["+num+"\\]]").val(json.vendor_id);
-        jQuery("input[name=thumb_image\\["+num+"\\]]").val(json.thumb_image);
-        
+        jQuery("input[name=thumb_image\\["+num+"\\]]").val(json.thumb_image);        
         jQuery("input[name=product_quantity\\["+num+"\\]]").val(1);
+		jQuery("textarea[name=product_attributes\\["+num+"\\]]").val('');
+        jQuery("input[name=attributes\\["+num+"\\]]").val('');
+		
 		updateOrderSubtotalValue();
+		if (load_attribute!=-1){
+			if (load_attribute==1 && json.count_attributes>0){
+                url = "index.php?option=com_jshopping&controller=products&task=getattributes&tmpl=component&product_id="+pid+"&num="+num+'&id_currency='+currency_id+'&display_price='+display_price;
+                if (user_id>0){
+                    url+='&admin_load_user_id='+user_id;
+                }
+				SqueezeBox.open(url, {handler: 'iframe',size: { x: 600, y: 480 }});
+			}else{
+				SqueezeBox.close();
+			}
+		}
     });
+}
+
+function loadProductAttributeInfoOrderItem(num){
+    jQuery("input[name=product_item_price\\["+num+"\\]]", window.parent.document).val( jQuery('#pricefloat').val() );
+    jQuery("input[name=product_ean\\["+num+"\\]]", window.parent.document).val( jQuery('#product_code').html() );
+    jQuery("input[name=weight\\["+num+"\\]]", window.parent.document).val( jQuery('#block_weight').html() );
+    var attributetext = '';    
+    var attr = {};    
+    for(var i=0;i<attr_list.length;i++){
+        var id = attr_list[i];        
+        attributetext += jQuery('#attr_name_id_'+id).html();
+        attributetext += " ";
+        attributetext += jQuery('#jshop_attr_id'+id+' option:selected').text();
+        attributetext += "\n";        
+        attr[parseInt(id)] = parseInt(jQuery('#jshop_attr_id'+id).val());
+    }
+    jQuery("input[name=attributes\\["+num+"\\]]", window.parent.document).val(JSON.stringify(attr));
+    jQuery("textarea[name=product_attributes\\["+num+"\\]]", window.parent.document).val(attributetext);
+
+    window.parent.updateOrderSubtotalValue();
+    
+    window.parent.SqueezeBox.close();
 }
 
 function addOrderTaxRow(){
@@ -759,4 +801,126 @@ function changeProductField(obj) {
 		div_inputs.find("input[name^='select_image_']").val(_JSHOP_IMAGE_SELECT).hide();
 		div_inputs.find("input.product_image").show();
 	}
+}
+
+function getListOrderItems(){
+    var max_count = end_number_order_item + 1;
+    var product = {};
+    for(var a=1; a<=max_count; a++){
+        detal_product = {};
+        product_id = jQuery('input[name="product_id['+ a +']"]').val();
+        if (!product_id) continue;
+        detal_product['product_id'] = product_id;
+        detal_product['product_tax'] = jQuery('input[name="product_tax['+a+']"]').val();
+        detal_product['product_name'] = jQuery('input[name="product_name['+a+']"]').val();
+        detal_product['product_ean'] = jQuery('input[name="product_ean['+a+']"]').val();
+        detal_product['product_attributes'] = jQuery('input[name="product_attributes['+a+']"]').val();
+        detal_product['product_freeattributes'] = jQuery('input[name="product_freeattributes['+a+']"]').val();
+        detal_product['thumb_image'] = jQuery('input[name="thumb_image['+a+']"]').val();
+        detal_product['weight'] = jQuery('input[name="weight['+a+']"]').val();
+        detal_product['delivery_times_id'] = jQuery('input[name="delivery_times_id['+a+']"]').val();
+        detal_product['vendor_id'] = jQuery('input[name="vendor_id['+a+']"]').val();
+        detal_product['product_quantity'] = jQuery('input[name="product_quantity['+a+']"]').val();
+        detal_product['product_item_price'] = jQuery('input[name="product_item_price['+a+']"]').val();
+        detal_product['order_item_id'] = jQuery('input[name="order_item_id['+a+']"]').val();
+        product[a] = detal_product;
+    }
+    return product;
+}
+
+function getOrderData(){
+    var data_order = {};
+    jQuery(".jshop_address input, .jshop_address select").each(function(){
+        var name = jQuery(this).attr('name');
+        data_order[name] = jQuery(this).val();
+    });
+    
+    data_order['user_id'] = jQuery('#user_id').val();
+    data_order['currency_id'] = jQuery('select[name="currency_id"]').val();
+    data_order['display_price'] = jQuery('select[name="display_price"]').val();
+    data_order['lang'] = jQuery('select[name="lang"]').val();
+    data_order['shipping_method_id'] = jQuery('select[name="shipping_method_id"]').val();
+    data_order['payment_method_id'] = jQuery('select[name="payment_method_id"]').val();
+    data_order['order_delivery_times_id'] = jQuery('select[name="order_delivery_times_id"]').val();
+    data_order['order_payment'] = jQuery('input[name="order_payment"]').val();
+    data_order['order_shipping'] = jQuery('input[name="order_shipping"]').val();
+    data_order['order_package'] = jQuery('input[name="order_package"]').val();
+    data_order['order_discount'] = jQuery('input[name="order_discount"]').val();
+    return data_order;
+}
+
+function order_tax_calculate(){
+    var user_id = jQuery('#user_id').val();
+    var product = getListOrderItems();
+    var data_order = getOrderData();
+    data_order['product'] = product;
+    
+    var url = 'index.php?option=com_jshopping&controller=orders&task=loadtaxorder';
+    if (user_id>0){
+        url+='&admin_load_user_id='+user_id;
+    }
+    jQuery.ajax({
+        type: "POST",
+        url: url,
+        data: {'data_order': data_order},
+        dataType : "json"
+    }).done(function(json) {
+        jQuery('input[name="tax_percent[]"]').parent().parent().remove();
+        for (var i=0;i<json.length;i++){
+            var html="<tr class='bold'>";
+            html+='<td class="right"><input type="text" class="small3" name="tax_percent[]" value="'+json[i]['tax']+'"/> %</td>';
+            html+='<td class="left"><input type="text" class="small3" name="tax_value[]" onkeyup="updateOrderTotalValue();" value="'+json[i]['value']+'"/></td>';
+            html+='</tr>';
+            jQuery("#row_button_add_tax").before(html);
+        }
+        updateOrderTotalValue();
+    });
+}
+
+function order_shipping_calculate(){
+    var user_id = jQuery('#user_id').val();
+    var product = getListOrderItems();
+    var data_order = getOrderData();
+    data_order['product'] = product;
+    
+    var url = 'index.php?option=com_jshopping&controller=orders&task=loadshippingprice';
+    if (user_id>0){
+        url+='&admin_load_user_id='+user_id;
+    }
+    jQuery.ajax({
+        type: "POST",
+        url: url,
+        data: {'data_order': data_order},
+        dataType : "json"
+    }).done(function(json){
+        if (json){
+            jQuery('input[name="order_shipping"]').val(json.shipping);
+            jQuery('input[name="order_package"]').val(json.package);
+        }else{
+            jQuery('input[name="order_shipping"]').val('');
+            jQuery('input[name="order_package"]').val('');
+        }
+        updateOrderTotalValue();
+    });
+}
+
+function order_payment_calculate(){
+    var user_id = jQuery('#user_id').val();
+    var product = getListOrderItems();
+    var data_order = getOrderData();
+    data_order['product'] = product;
+    
+    var url = 'index.php?option=com_jshopping&controller=orders&task=loadpaymentprice';
+    if (user_id>0){
+        url+='&admin_load_user_id='+user_id;
+    }
+    jQuery.ajax({
+        type: "POST",
+        url: url,
+        data: {'data_order': data_order},
+        dataType : "json"
+    }).done(function(json){
+        jQuery('input[name="order_payment"]').val(json.price);
+        updateOrderTotalValue();
+    });
 }

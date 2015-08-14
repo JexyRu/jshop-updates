@@ -1329,6 +1329,7 @@ function reloadAttribSelectAndPrice(id_select){
             }
 			
             jQuery("#block_price").html(json.price);
+            jQuery("#pricefloat").val(json.pricefloat);
             
 			if (json.basicprice){
                 jQuery("#block_basic_price").html(json.basicprice);

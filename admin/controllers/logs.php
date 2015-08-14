@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.7.0 08.09.2014
+* @version      4.10.0 08.09.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -26,7 +26,8 @@ class JshoppingControllerLogs extends JControllerLegacy{
         
 		$view = $this->getView("logs", 'html');
         $view->setLayout("list");	
-        $view->assign('rows', $rows);        
+        $view->assign('rows', $rows);
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayLogs', array(&$view));

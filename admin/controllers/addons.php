@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.6.1 05.11.2013
+* @version      4.10.0 05.11.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -45,6 +45,7 @@ class JshoppingControllerAddons extends JControllerLegacy{
         $view->setLayout("list");
         $view->assign('rows', $rows); 
         $view->assign('back64', $back64);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayAddons', array(&$view));		

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 10.02.2014
+* @version      4.10.0 10.02.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -1029,5 +1029,9 @@ define('_JSHOP_MAX_VERSION_ERROR','Version of store is more than %s');
 define('_JSHOP_ATTRIBUTES_GROUPS','Attributes groups');
 define('_JSHOP_BACK_TO_ATTRIBUTES','Back to attributes');
 define('_TEXT_TRUSTED_SHOPS','Use Trusted Shop to increase your sales results! More Informations here:');
+define('_JSHOP_EXT_MENU_CHECKOUT_STEP','Extended checkout steps');
+define('_JSHOP_GUEST','Guest');
+define('_JSHOP_TAX_CALCULATE', 'Calculate tax');
+define('_JSHOP_HIDE_PRICE_NULL', 'Hide price = 0');
 
 ?>

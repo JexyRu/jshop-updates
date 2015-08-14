@@ -1022,7 +1022,7 @@ class jshopProduct extends JTableAvto{
     return $product;
     }
     
-    function getBuildSelectAttributes($attributeValues, $attributeActive){
+    function getBuildSelectAttributes($attributeValues, $attributeActive, $displayonlyattrtype = null){
         $jshopConfig = JSFactory::getConfig();
         if (!$jshopConfig->admin_show_attributes) return array();
         $dispatcher = JDispatcher::getInstance();
@@ -1032,6 +1032,9 @@ class jshopProduct extends JTableAvto{
 
         foreach($attrib as $k=>$v){
             $attr_id = $v->attr_id;
+            if ($displayonlyattrtype){
+                $v->attr_type = $displayonlyattrtype;
+            }
             if (isset($attributeValues[$attr_id]) && $attributeValues[$attr_id]){
                 if (isset($attributeActive[$attr_id])){
                     $_firstval = $attributeActive[$attr_id];

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      2.9.4 31.07.2010
+* @version      4.10.0 31.07.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -49,7 +49,7 @@ class JshoppingControllerCountries extends JControllerLegacy{
         $f_option[] = JHTML::_('select.option', 1, _JSHOP_PUBLISH, 'id', 'name');
         $f_option[] = JHTML::_('select.option', 2, _JSHOP_UNPUBLISH, 'id', 'name');
         
-        $filter = JHTML::_('select.genericlist', $f_option, 'publish', 'onchange="document.adminForm.submit();"', 'id', 'name', $publish);
+        $filter = JHTML::_('select.genericlist', $f_option, 'publish', 'class="chosen-select" onchange="document.adminForm.submit();"', 'id', 'name', $publish);
                 
 		$view=$this->getView("countries", 'html');
         $view->setLayout("list");		
@@ -58,6 +58,7 @@ class JshoppingControllerCountries extends JControllerLegacy{
         $view->assign('filter', $filter);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayCountries', array(&$view));

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.3.0 24.07.2013
+* @version      4.10.0 24.07.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -36,7 +36,8 @@ class JshoppingControllerProductLabels extends JControllerLegacy{
         $view->assign('rows', $rows);
         $view->assign('config', $jshopConfig);
         $view->assign('filter_order', $filter_order);
-        $view->assign('filter_order_Dir', $filter_order_Dir);       
+        $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();       
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayProductLabels', array(&$view));		

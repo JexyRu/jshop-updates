@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      3.9.1 20.08.2012
+* @version      4.10.0 20.08.2012
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -64,6 +64,7 @@ class JshoppingControllerShippingsPrices extends JControllerLegacy{
         $view->assign('shipping_id_back', $shipping_id_back);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayShippngsPrices', array(&$view));

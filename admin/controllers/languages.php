@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 20.11.2010
+* @version      4.10.0 20.11.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -27,6 +27,7 @@ class JshoppingControllerLanguages extends JControllerLegacy{
         $view->assign('rows', $rows);
         $view->assign('default_front', $jshopConfig->getFrontLang());
         $view->assign('defaultLanguage', $jshopConfig->defaultLanguage);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayLanguage', array(&$view));

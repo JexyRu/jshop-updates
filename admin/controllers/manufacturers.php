@@ -34,7 +34,8 @@ class JshoppingControllerManufacturers extends JControllerLegacy{
         $view->assign('rows', $rows);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
-		
+        $view->sidebar = JHtmlSidebar::render();
+
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayManufacturers', array(&$view));
         $view->displayList();

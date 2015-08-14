@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 13.08.2013
+* @version      4.10.0 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -18,7 +18,7 @@ $count = count($rows);
 $eName = $this->eName;
 $jsfname = $this->jsfname;
 $i = 0;
-JHtml::_('formbehavior.chosen', 'select');
+JHtml::_('formbehavior.chosen', '.chosen-select');
 ?>
 
 <form action="index.php?option=com_jshopping&controller=product_list_selectable&tmpl=component" method="post" name="adminForm" id="adminForm">

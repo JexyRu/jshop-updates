@@ -36,6 +36,7 @@ class JshoppingControllerPayments extends JControllerLegacy{
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
         $view->assign('config', $jshopConfig);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayPayments', array(&$view));

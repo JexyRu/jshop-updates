@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 09.01.2015
+* @version      4.10.0 18.04.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -77,7 +77,7 @@ class JshoppingControllerProducts extends JControllerLegacy{
             $firstVendor[0] = new stdClass();
             $firstVendor[0]->id = -1;
             $firstVendor[0]->name = " - "._JSHOP_VENDOR." - ";
-            $lists['vendors'] = JHTML::_('select.genericlist', array_merge($firstVendor, $vendors), 'vendor_id','onchange="document.adminForm.submit();"', 'id', 'name', $vendor_id);
+            $lists['vendors'] = JHTML::_('select.genericlist', array_merge($firstVendor, $vendors), 'vendor_id','class="chosen-select" onchange="document.adminForm.submit();"', 'id', 'name', $vendor_id);
             
             foreach($rows as $k=>$v){
                 if ($v->vendor_id){
@@ -103,7 +103,7 @@ class JshoppingControllerProducts extends JControllerLegacy{
         $_manufacturer = JSFactory::getModel('manufacturers');
         $manufs = $_manufacturer->getList();
         $manufs = array_merge($manuf1, $manufs);
-        $lists['manufacturers'] = JHTML::_('select.genericlist', $manufs, 'manufacturer_id',' onchange="document.adminForm.submit();"', 'manufacturer_id', 'name', $manufacturer_id);
+        $lists['manufacturers'] = JHTML::_('select.genericlist', $manufs, 'manufacturer_id','class="chosen-select" onchange="document.adminForm.submit();"', 'manufacturer_id', 'name', $manufacturer_id);
         
         // product labels
         if ($jshopConfig->admin_show_product_labels) {
@@ -111,7 +111,7 @@ class JshoppingControllerProducts extends JControllerLegacy{
             $alllabels = $_labels->getList();
             $first = array();
             $first[] = JHTML::_('select.option', '0', " - "._JSHOP_LABEL." - ", 'id','name');
-            $lists['labels'] = JHTML::_('select.genericlist', array_merge($first, $alllabels), 'label_id','style="width: 100px;" onchange="document.adminForm.submit();"','id','name', $label_id);
+            $lists['labels'] = JHTML::_('select.genericlist', array_merge($first, $alllabels), 'label_id','style="width: 100px;" class="chosen-select" onchange="document.adminForm.submit();"','id','name', $label_id);
         }
         //
         
@@ -119,7 +119,7 @@ class JshoppingControllerProducts extends JControllerLegacy{
         $f_option[] = JHTML::_('select.option', 0, " - "._JSHOP_SHOW." - ", 'id', 'name');
         $f_option[] = JHTML::_('select.option', 1, _JSHOP_PUBLISH, 'id', 'name');
         $f_option[] = JHTML::_('select.option', 2, _JSHOP_UNPUBLISH, 'id', 'name');
-        $lists['publish'] = JHTML::_('select.genericlist', $f_option, 'publish', 'style="width: 100px;" onchange="document.adminForm.submit();"', 'id', 'name', $publish);
+        $lists['publish'] = JHTML::_('select.genericlist', $f_option, 'publish', 'style="width: 100px;" class="chosen-select" onchange="document.adminForm.submit();"', 'id', 'name', $publish);
         
         foreach($rows as $key=>$v){
             if ($rows[$key]->label_id){
@@ -134,7 +134,7 @@ class JshoppingControllerProducts extends JControllerLegacy{
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayListProducts', array(&$rows));
         
-        $view=$this->getView("product_list", 'html');
+        $view = $this->getView("product_list", 'html');
         $view->assign('rows', $rows);
         $view->assign('lists', $lists);
         $view->assign('filter_order', $filter_order);
@@ -144,7 +144,8 @@ class JshoppingControllerProducts extends JControllerLegacy{
         $view->assign('pagination', $pagination);
         $view->assign('text_search', $text_search);
         $view->assign('config', $jshopConfig);
-        $view->assign('show_vendor', $show_vendor);        
+        $view->assign('show_vendor', $show_vendor);
+        $view->sidebar = JHtmlSidebar::render();        
         $dispatcher->trigger('onBeforeDisplayListProductsView', array(&$view));
         $view->display();        
     }
@@ -945,7 +946,8 @@ class JshoppingControllerProducts extends JControllerLegacy{
         foreach ($cid as $key=>$value){
             $product = JSFactory::getTable('product', 'jshop');
             $product->load($value);
-            $product->product_id = null;                        
+            $product->product_id = null;
+            $product->product_publish = 0;
             foreach($languages as $lang){
                 $name_alias = 'alias_'.$lang->language;
                 if ($product->$name_alias){
@@ -1409,35 +1411,27 @@ class JshoppingControllerProducts extends JControllerLegacy{
         die();
     }
     
-    function loadproductinfo(){        
+    function loadproductinfo(){
         $jshopConfig = JSFactory::getConfig();
         $db = JFactory::getDBO();
-        
+
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onLoadInfoProduct', array());
         $id_vendor_cuser = getIdVendorForCUser();        
         $product_id = JRequest::getInt('product_id');
-		$currency_id = JRequest::getInt('currency_id');
         $layout = JRequest::getVar('layout','productinfo_json');
+        $display_price = JRequest::getVar('display_price');
+        $jshopConfig->setDisplayPriceFront($display_price);
         
         if ($id_vendor_cuser && $product_id){
             checkAccessVendorToProduct($id_vendor_cuser, $product_id);
         }
         
-        $products = JSFactory::getModel("products");
-        
         $product = JSFactory::getTable('product', 'jshop');
         $product->load($product_id);
         $product->getDescription();
-        
-		$currency = JSFactory::getTable('currency', 'jshop');
-        $currency->load($currency_id);
-        if ($currency_id){
-            $currency_value = $currency->currency_value;
-        }else{
-            $currency_value = 1;
-        }
-        $product_price = getPriceFromCurrency($product->product_price, $product->currency_id, $currency_value);
+		$count_attributes = count($product->getRequireAttribute());
+        $product_price = $product->getPrice();
 		
         $res = array();
         $res['product_id'] = $product->product_id;
@@ -1448,9 +1442,10 @@ class JshoppingControllerProducts extends JControllerLegacy{
         $res['product_weight'] = $product->product_weight;
         $res['product_tax'] = $product->getTax();
         $res['product_name'] = $product->name;
-		$res['thumb_image'] = getPatchProductImage($product->image,'thumb');
+        $res['count_attributes'] = $count_attributes;
+		$res['thumb_image'] = getPatchProductImage($product->image, 'thumb');
 
-        $view=$this->getView("product_edit", 'html');
+        $view = $this->getView("product_edit", 'html');
         $view->setLayout($layout);
         $view->assign('res', $res);
         $view->assign('edit', null);
@@ -1465,7 +1460,6 @@ class JshoppingControllerProducts extends JControllerLegacy{
 		$productvideo = JSFactory::getTable('productvideo', 'jshop');
 		$productvideo->load($video_id);
 		
-		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onAfterLoadVideoCodeForProduct', array(&$productvideo));
 		
@@ -1477,5 +1471,102 @@ class JshoppingControllerProducts extends JControllerLegacy{
         $view->display();
 		die();
 	}
+    
+    function getattributes(){
+        $jshopConfig = JSFactory::getConfig();
+        $product_id = JRequest::getInt('product_id');
+        $num = JRequest::getInt('num');
+        $admin_load_user_id = JRequest::getInt('admin_load_user_id');
+        $id_currency = JRequest::getInt('id_currency');
+        $display_price = JRequest::getVar('display_price');
+        $jshopConfig->setDisplayPriceFront($display_price);
+        
+        $product = JSFactory::getTable('product', 'jshop');
+        $product->load($product_id);
+        $attributesDatas = $product->getAttributesDatas();
+        $product->setAttributeActive($attributesDatas['attributeActive']);
+        $attributeValues = $attributesDatas['attributeValues'];
+        
+        $attributes = $product->getBuildSelectAttributes($attributeValues, $attributesDatas['attributeSelected'], 1);
+
+        $_attributevalue = JSFactory::getTable('AttributValue', 'jshop');
+        $all_attr_values = $_attributevalue->getAllAttributeValues();
+        
+        $product->getExtendsData();
+        
+        $urlupdateprice = 'index.php?option=com_jshopping&controller=products&task=ajax_attrib_select_and_price&product_id='.$product_id.'&ajax=1&admin_load_user_id='.$admin_load_user_id.'&id_currency='.$id_currency.'&display_price='.$display_price;
+        
+        $view = $this->getView("product_edit", 'html');
+        $view->setLayout('product_attribute_select');
+        $view->assign('attributes', $attributes);
+        $view->assign('product', $product);
+        $view->assign('num', $num);
+        $view->assign('config', $jshopConfig);
+        $view->assign('image_path', $jshopConfig->live_path.'/images');
+        $view->assign('noimage', $jshopConfig->noimage);
+        $view->assign('all_attr_values', $all_attr_values);
+        $view->assign('urlupdateprice', $urlupdateprice);
+        JDispatcher::getInstance()->trigger('onBeforeDisplayGetAttributes', array(&$view) );
+        $view->display(); 
+    }
+    
+    function ajax_attrib_select_and_price(){
+        $db = JFactory::getDBO();        
+        $jshopConfig = JSFactory::getConfig();
+        $display_price = JRequest::getVar('display_price');
+        $jshopConfig->setDisplayPriceFront($display_price);        
+        $product_id = JRequest::getInt('product_id');
+        $change_attr = JRequest::getInt('change_attr');
+        if ($jshopConfig->use_decimal_qty){
+            $qty = floatval(str_replace(",", ".", JRequest::getVar('qty',1)));
+        }else{
+            $qty = JRequest::getInt('qty', 1);
+        }
+        if ($qty < 0) $qty = 1;
+        $attribs = JRequest::getVar('attr');
+        if (!is_array($attribs)) $attribs = array();
+        $freeattr = array();
+
+        $dispatcher = JDispatcher::getInstance();
+        $dispatcher->trigger('onBeforeLoadDisplayAjaxAttrib', array(&$product_id, &$change_attr, &$qty, &$attribs, &$freeattr));
+        
+        $product = JSFactory::getTable('product', 'jshop'); 
+        $product->load($product_id);
+        $dispatcher->trigger('onBeforeLoadDisplayAjaxAttrib2', array(&$product));
+        
+        $attributesDatas = $product->getAttributesDatas($attribs);
+        $product->setAttributeActive($attributesDatas['attributeActive']);
+        $attributeValues = $attributesDatas['attributeValues'];
+        $product->setFreeAttributeActive($freeattr);
+        
+        $attributes = $product->getBuildSelectAttributes($attributeValues, $attributesDatas['attributeSelected'], 1);
+
+        $rows = array();
+        foreach($attributes as $k=>$v){            
+            $rows[] = '"id_'.$k.'":"'.json_value_encode($v->selects, 1).'"';
+        }
+
+        $pricefloat = $product->getPrice($qty, 1, 1, 1);
+        $price = formatprice($pricefloat);
+        $available = intval($product->getQty() > 0);
+        $ean = $product->getEan();
+        $weight = $product->getWeight();
+        
+        $rows[] = '"price":"'.json_value_encode($price).'"';
+        $rows[] = '"pricefloat":"'.$pricefloat.'"';
+        $rows[] = '"available":"'.$available.'"';
+        $rows[] = '"ean":"'.json_value_encode($ean).'"';
+        $rows[] = '"weight":"'.json_value_encode($weight).'"';
+        
+        $qty_in_stock = getDataProductQtyInStock($product);
+        $rows[] = '"qty":"'.json_value_encode(sprintQtyInStock($qty_in_stock)).'"';
+                
+        $product->updateOtherPricesIncludeAllFactors();
+        
+        $dispatcher->trigger('onBeforeDisplayAjaxAttrib', array(&$rows, &$product) );
+        print '{'.implode(",",$rows).'}';
+        die();
+    }
+
 }
 ?>

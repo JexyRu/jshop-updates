@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      3.3.0 03.11.2011
+* @version      4.10.0 03.11.2011
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -52,7 +52,8 @@ class JshoppingControllerConfigDisplayPrice extends JControllerLegacy{
         $view = $this->getView("config_display_price", 'html');
         $view->setLayout("list");
         $view->assign('rows', $rows);
-        $view->assign('typedisplay', $typedisplay); 
+        $view->assign('typedisplay', $typedisplay);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayConfigDisplayPrice', array(&$view)); 

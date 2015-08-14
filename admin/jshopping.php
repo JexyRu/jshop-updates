@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 20.09.2014
+* @version      4.10.0 20.09.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -17,7 +17,11 @@ require_once(JPATH_COMPONENT_SITE."/lib/factory.php");
 require_once(JPATH_COMPONENT_ADMINISTRATOR.'/functions.php');
 
 $ajax = JRequest::getInt('ajax');
+$admin_load_user_id = JRequest::getInt('admin_load_user_id');
 $adminlang = JFactory::getLanguage();
+if ($admin_load_user_id){
+    JSFactory::setLoadUserId($admin_load_user_id);
+}
 if (!JRequest::getVar("js_nolang")){
     JSFactory::loadAdminLanguageFile();
 }

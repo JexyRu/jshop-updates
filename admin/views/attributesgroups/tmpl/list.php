@@ -1,17 +1,21 @@
 <?php 
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.10.0 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
 * @license      GNU/GPL
 */
 defined('_JEXEC') or die();
-displaySubmenuOptions("attributes");
 $rows = $this->rows;
 $count = count($rows);
 $i = 0; 
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuOptions("attributes");?>
 <form action="index.php?option=com_jshopping&controller=attributesgroups" method="post" name="adminForm" id="adminForm">
 <?php print $this->tmp_html_start?>
 <table class="table table-striped">
@@ -81,3 +85,4 @@ $i++;
 <input type="hidden" name="boxchecked" value="0" />
 <?php print $this->tmp_html_end?>
 </form>
+</div>

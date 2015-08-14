@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      2.7.0 16.12.2010
+* @version      4.10.0 16.12.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -29,6 +29,7 @@ class JshoppingControllerImportExport extends JControllerLegacy{
 		$rows = $importexport->getList();		
         $view=$this->getView("import_export_list", 'html');
 		$view->assign('rows', $rows);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayImportExport', array(&$view));

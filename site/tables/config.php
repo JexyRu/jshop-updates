@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.10.0 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -22,11 +22,14 @@ class jshopConfig extends JTableAvto {
     }
 
     function loadCurrencyValue(){
+        $app  = JFactory::getApplication();
         $session = JFactory::getSession();
         $id_currency_session = $session->get('js_id_currency');
         $id_currency = JRequest::getInt('id_currency');
         $main_currency = $this->mainCurrency;
-        if ($this->default_frontend_currency) $main_currency = $this->default_frontend_currency;
+        if ($this->default_frontend_currency){
+            $main_currency = $this->default_frontend_currency;
+        }
         
         if ($session->get('js_id_currency_orig') && $session->get('js_id_currency_orig')!=$main_currency) {
             $id_currency_session = 0;
@@ -44,10 +47,15 @@ class jshopConfig extends JTableAvto {
         }else{
             $this->cur_currency = $main_currency;
         }
-        $session->set('js_id_currency', $this->cur_currency);
+        if (!$app->isAdmin()){
+            $session->set('js_id_currency', $this->cur_currency);
+        }
+        
         $all_currency = JSFactory::getAllCurrency();
         $current_currency = $all_currency[$this->cur_currency];
-        if (!$current_currency->currency_value) $current_currency->currency_value = 1;
+        if (!$current_currency->currency_value){
+            $current_currency->currency_value = 1;
+        }
         $this->currency_value = $current_currency->currency_value;
         $this->currency_code = $current_currency->currency_code;
         $this->currency_code_iso = $current_currency->currency_code_iso;
@@ -83,6 +91,12 @@ class jshopConfig extends JTableAvto {
             }
         }
         return $display_price;
+    }
+    
+    function setDisplayPriceFront($display_price){
+        if ($display_price==='0' || $display_price==='1' || $display_price===0 || $display_price===1){
+            $this->display_price_front_current = (int)$display_price;
+        }
     }
     
     function getListFieldsRegister(){

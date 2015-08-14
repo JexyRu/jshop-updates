@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.9.0 13.08.2013
+* @version      4.10.0 11.05.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -10,8 +10,12 @@ defined('_JEXEC') or die('Restricted access');
 
 $jshopConfig=JSFactory::getConfig();
 JHtml::_('bootstrap.tooltip');
-displaySubmenuConfigs('catprod');
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuConfigs('catprod');?>
 <div class="jshop_edit">
 <form action="index.php?option=com_jshopping&controller=config" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 <?php print $this->tmp_html_start?>
@@ -92,7 +96,15 @@ displaySubmenuConfigs('catprod');
         <input type="checkbox" name="product_list_show_price_default" value="1" <?php if ($jshopConfig->product_list_show_price_default) echo 'checked="checked"';?> />
     </td>
 </tr>
-
+<tr>
+    <td class="key">
+        <?php echo _JSHOP_HIDE_PRICE_NULL?>
+    </td>
+    <td>
+        <input type="hidden" name="product_hide_price_null" value="0">
+        <input type="checkbox" name="product_hide_price_null" value="1" <?php if ($jshopConfig->product_hide_price_null) echo 'checked="checked"';?> />
+    </td>
+</tr>
 <tr>
     <td class="key">
         <?php echo _JSHOP_SHOW_PRICE?>
@@ -652,4 +664,5 @@ displaySubmenuConfigs('catprod');
 <div class="clr"></div>
 <?php print $this->tmp_html_end?>
 </form>
+</div>
 </div>

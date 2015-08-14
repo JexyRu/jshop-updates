@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.1.0 22.12.2012
+* @version      4.10.0 22.12.2012
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -47,7 +47,8 @@ class JshoppingControllerCoupons extends JControllerLegacy{
         $view->assign('currency', $currency->currency_code);
         $view->assign('pageNav', $pageNav);
         $view->assign('filter_order', $filter_order);
-        $view->assign('filter_order_Dir', $filter_order_Dir);   
+        $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();   
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayCoupons', array(&$view));		

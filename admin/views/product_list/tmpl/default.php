@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 09.04.2014
+* @version      4.10.0 09.04.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -17,9 +17,12 @@ $manufacturer_id=$this->manufacturer_id;
 $count=count ($rows);
 $i=0;
 $saveOrder=$this->filter_order_Dir=="asc" && $this->filter_order=="ordering";
-JHtml::_('formbehavior.chosen', 'select');
+JHtml::_('formbehavior.chosen', '.chosen-select');
 ?>
-
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
 <form action="index.php?option=com_jshopping&controller=products" method="post" name="adminForm" id="adminForm">
 <?php print $this->tmp_html_start?>
 
@@ -264,3 +267,4 @@ $i++;
 <input type="hidden" name="boxchecked" value="0" />
 <?php print $this->tmp_html_end?>
 </form>
+</div>

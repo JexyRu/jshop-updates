@@ -1139,6 +1139,12 @@ class jshopCart{
     return $rows;
     }
     
+    function loadProductsFromArray($products){
+        foreach($products as $v){
+            $this->products[] = $v;   
+        }
+    }
+    
     function clear(){
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeClearCart', array(&$this));

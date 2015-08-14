@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.10.0 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -45,6 +45,9 @@ class JshoppingControllerCart extends JControllerLegacy{
 
         $freeattribut = JRequest::getVar("freeattribut");
         if (!is_array($freeattribut)) $freeattribut = array();
+        
+        $checkout = JSFactory::getModel('checkout', 'jshop');
+        $checkout->setMaxStep(2);
         
         $cart = JSFactory::getModel('cart', 'jshop');
         $cart->load($to);        
@@ -121,7 +124,6 @@ class JshoppingControllerCart extends JControllerLegacy{
         $tmp = $statictext->loadData("cart");
         $cartdescr = $tmp->text;
 
-        
         $weight_product = $cart->getWeightProducts();
         if ($weight_product==0 && $jshopConfig->hide_weight_in_cart_weight0){
             $jshopConfig->show_weight_order = 0;
@@ -139,6 +141,9 @@ class JshoppingControllerCart extends JControllerLegacy{
         if ($jshopConfig->hide_tax) $show_percent_tax = 0;
         $hide_subtotal = 0;
         if (($jshopConfig->hide_tax || count($tax_list)==0) && !$cart->rabatt_summ) $hide_subtotal = 1;
+        
+        $checkout = JSFactory::getModel('checkout', 'jshop');
+        $checkout_navigator = $checkout->showCheckoutNavigation('0');
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayCart', array(&$cart));
@@ -165,7 +170,8 @@ class JshoppingControllerCart extends JControllerLegacy{
         $view->assign('hide_subtotal', $hide_subtotal);
         $view->assign('weight', $weight_product);
         $view->assign('shippinginfo', SEFLink($jshopConfig->shippinginfourl,1));
-		$view->assign('cartdescr', $cartdescr);
+        $view->assign('cartdescr', $cartdescr);
+		$view->assign('checkout_navigator', $checkout_navigator);
         $dispatcher->trigger('onBeforeDisplayCartView', array(&$view));
 		$view->display();
         if ($ajax) die();
@@ -175,6 +181,8 @@ class JshoppingControllerCart extends JControllerLegacy{
         header("Cache-Control: no-cache, must-revalidate");
         $ajax = JRequest::getInt('ajax');
         $number_id = JRequest::getInt('number_id');
+        $checkout = JSFactory::getModel('checkout', 'jshop');
+        $checkout->setMaxStep(2);
         $cart = JSFactory::getModel('cart', 'jshop');
         $cart->load();    
         $cart->delete($number_id);
@@ -188,6 +196,8 @@ class JshoppingControllerCart extends JControllerLegacy{
     function refresh(){
         $ajax = JRequest::getInt('ajax');
         $quantitys = JRequest::getVar('quantity');
+        $checkout = JSFactory::getModel('checkout', 'jshop');
+        $checkout->setMaxStep(2);
         $cart = JSFactory::getModel('cart', 'jshop');
         $cart->load();
         $cart->refresh($quantitys);
@@ -203,8 +213,12 @@ class JshoppingControllerCart extends JControllerLegacy{
         $dispatcher->trigger('onLoadDiscountSave', array() );
         
         $ajax = JRequest::getInt('ajax');
-        $coupon = JSFactory::getTable('coupon', 'jshop');
         $code = JRequest::getVar('rabatt');
+        
+        $checkout = JSFactory::getModel('checkout', 'jshop');
+        $checkout->setMaxStep(2);
+        
+        $coupon = JSFactory::getTable('coupon', 'jshop');
 
         if ($coupon->getEnableCode($code)){
             $cart = JSFactory::getModel('cart', 'jshop');

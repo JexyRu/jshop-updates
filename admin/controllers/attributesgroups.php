@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.10.0 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -28,6 +28,7 @@ class JshoppingControllerAttributesGroups extends JControllerLegacy{
         $view = $this->getView("attributesgroups", 'html');
         $view->setLayout("list");
         $view->assign('rows', $rows);
+        $view->sidebar = JHtmlSidebar::render();
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayAttributesGroups', array(&$view));
         $view->displayList();

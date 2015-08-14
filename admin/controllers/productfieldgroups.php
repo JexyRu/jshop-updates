@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      3.3.0 10.12.2011
+* @version      4.10.0 10.12.2011
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -28,7 +28,8 @@ class JshoppingControllerProductFieldGroups extends JControllerLegacy{
         
         $view = $this->getView("product_field_groups", 'html');
         $view->setLayout("list");
-        $view->assign('rows', $rows);    
+        $view->assign('rows', $rows);
+        $view->sidebar = JHtmlSidebar::render();    
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayProductsFieldGroups', array(&$view));		

@@ -56,6 +56,19 @@ class jshopShippingMethod extends JTableAvto {
         return $db->loadObjectList();
     }
     
+    function getShippingPriceId($shipping_id, $country_id, $publish = 1){
+        $db = JFactory::getDBO(); 
+        $query_where = ($publish) ? ("AND sh_method.published = '1'") : ("");
+        $query = "SELECT sh_pr_method.sh_pr_method_id FROM `#__jshopping_shipping_method` AS sh_method
+                  INNER JOIN `#__jshopping_shipping_method_price` AS sh_pr_method ON sh_method.shipping_id = sh_pr_method.shipping_method_id
+                  INNER JOIN `#__jshopping_shipping_method_price_countries` AS sh_pr_method_country ON sh_pr_method_country.sh_pr_method_id = sh_pr_method.sh_pr_method_id
+                  INNER JOIN `#__jshopping_countries` AS countries  ON sh_pr_method_country.country_id = countries.country_id
+                  WHERE countries.country_id = '".$db->escape($country_id)."' and sh_method.shipping_id=".intval($shipping_id)."  $query_where";
+        extract(js_add_trigger(get_defined_vars(), "query"));
+        $db->setQuery($query);
+        return (int)$db->loadResult();
+    }
+    
     function getPayments(){
 		extract(js_add_trigger(get_defined_vars()));
         if ($this->payments==""){

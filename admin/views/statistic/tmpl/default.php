@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 13.08.2013
+* @version      4.10.0 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -8,10 +8,14 @@
 */
 defined('_JEXEC') or die('Restricted access');
 
-displaySubmenuOptions();
 $rows=$this->rows;
 $paid_status=$this->paid_status;
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuOptions();?>
 <?php print $this->tmp_html_start?>
 <div class="jshop_edit" style="width:100%; ">
 <div style="width:60%; float:left;">
@@ -416,3 +420,4 @@ $ptotal_d=$ptotal_sum_d=$ptotal_w=$ptotal_sum_w=$ptotal_m=$ptotal_sum_m=$ptotal_
 </div>
 </div>
 <?php print $this->tmp_html_end?>
+</div>

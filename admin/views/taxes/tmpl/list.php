@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 13.08.2013
+* @version      4.10.0 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -8,10 +8,14 @@
 */
 defined('_JEXEC') or die('Restricted access');
 
-displaySubmenuOptions();
 $rows = $this->rows;
 $i = 0;
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuOptions();?>
 <form action="index.php?option=com_jshopping&controller=taxes" method="post" name="adminForm" id="adminForm">
 
 <?php print $this->tmp_html_start?>
@@ -56,7 +60,7 @@ $i = 0;
     </a>
    </td>
    <td class="center">
-        <a class="btn btn-micro" href='index.php?option=com_jshopping&controller=taxes&task=edit&tax_id=".$row->tax_id."'>
+        <a class="btn btn-micro" href='index.php?option=com_jshopping&controller=taxes&task=edit&tax_id=<?php echo $row->tax_id; ?>'>
             <i class="icon-edit"></i>
         </a>
    </td>
@@ -77,3 +81,4 @@ $i++;
 <input type="hidden" name="boxchecked" value="0" />
 <?php print $this->tmp_html_end?>
 </form>
+</div>

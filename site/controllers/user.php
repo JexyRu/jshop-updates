@@ -29,12 +29,16 @@ class JshoppingControllerUser extends JControllerLegacy{
         $mainframe = JFactory::getApplication();
         $params = $mainframe->getParams();
         
+        $checkout = JSFactory::getModel('checkout', 'jshop');
+        $checkout_navigator = $checkout->showCheckoutNavigation('1');
+        
         $user = JFactory::getUser();
         if ($user->id){            
             $view_name = "user";
             $view_config = array("template_path"=>$jshopConfig->template_path.$jshopConfig->template."/".$view_name);
             $view = $this->getView($view_name, getDocumentType(), '', $view_config);
-            $view->setLayout("logout");            
+            $view->setLayout("logout");
+            $view->assign('checkout_navigator', $checkout_navigator);            
             $view->display();
             return 0;
         }
@@ -101,6 +105,7 @@ class JshoppingControllerUser extends JControllerLegacy{
         $view->assign('config_fields', $config_fields);
         $view->assign('live_path', JURI::base());
         $view->assign('urlcheckdata', SEFLink("index.php?option=com_jshopping&controller=user&task=check_user_exist_ajax&ajax=1", 1, 1, $jshopConfig->use_ssl));
+        $view->assign('checkout_navigator', $checkout_navigator);
         $dispatcher->trigger('onBeforeDisplayLoginView', array(&$view));
 		if ($jshopConfig->show_registerform_in_logintemplate){
             $dispatcher->trigger('onBeforeDisplayRegisterView', array(&$view));
@@ -235,6 +240,9 @@ class JshoppingControllerUser extends JControllerLegacy{
         
         filterHTMLSafe($adv_user, ENT_QUOTES);
         
+        $checkout = JSFactory::getModel('checkout', 'jshop');
+        $checkout_navigator = $checkout->showCheckoutNavigation('1');
+        
 		if ($config_fields['birthday']['display']){
             JHTML::_('behavior.calendar');
         }
@@ -250,6 +258,7 @@ class JshoppingControllerUser extends JControllerLegacy{
         $view->assign('user', $adv_user);
         $view->assign('live_path', JURI::base());        
         $view->assign('urlcheckdata', SEFLink("index.php?option=com_jshopping&controller=user&task=check_user_exist_ajax&ajax=1",1,1));        
+        $view->assign('checkout_navigator', $checkout_navigator);
         $dispatcher->trigger('onBeforeDisplayRegisterView', array(&$view));
         $view->display();
     }

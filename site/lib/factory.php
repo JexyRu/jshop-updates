@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.2 14.03.2015
+* @version      4.10.0 14.03.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -16,7 +16,9 @@ include_once(JPATH_ROOT."/components/com_jshopping/tables/config.php");
 require_once(JPATH_ROOT."/components/com_jshopping/lib/functions.php");
 
 class JSFactory{
-
+    
+    public static $load_user_id = null;
+    
     public static function getConfig(){
     static $config;
         if (!is_object($config)){
@@ -114,12 +116,12 @@ class JSFactory{
     public static function getUserShop(){
     static $usershop;
         if (!is_object($usershop)){
-            $user = JFactory::getUser();
+            $user = JFactory::getUser(self::$load_user_id);
             $db = JFactory::getDBO();
             require_once(JPATH_ROOT."/components/com_jshopping/tables/usershop.php");
             $usershop = new jshopUserShop($db);
-            if($user->id){
-                if(!$usershop->isUserInShop($user->id)) {
+            if ($user->id){
+                if (!$usershop->isUserInShop($user->id)){
                     $usershop->addUserToTableShop($user);
                 }
                 $usershop->load($user->id);
@@ -689,6 +691,14 @@ class JSFactory{
         $model = JModelLegacy::getInstance($type, $prefix, $config);
         JDispatcher::getInstance()->trigger('onAfterJSFactoryGetModel', array(&$model, &$type, &$prefix, &$config));
         return $model;
+    }
+    
+    public static function setLoadUserId($id){
+        self::$load_user_id = $id;
+    }
+    
+    public static function getLoadUserId(){
+        return self::$load_user_id;
     }
 
 }

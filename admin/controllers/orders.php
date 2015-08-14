@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 22.10.2014
+* @version      4.10.0 22.10.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -60,11 +60,11 @@ class JshoppingControllerOrders extends JControllerLegacy{
         $_list_status0[] = JHTML::_('select.option', 0, _JSHOP_ALL_ORDERS, 'status_id', 'name');
         $_list_status = $lists['status_orders'];
         $_list_status = array_merge($_list_status0, $_list_status);
-        $lists['changestatus'] = JHTML::_('select.genericlist', $_list_status,'status_id','style = "width: 170px;" ','status_id','name', $status_id );
+        $lists['changestatus'] = JHTML::_('select.genericlist', $_list_status,'status_id','class="chosen-select" style="width: 170px;" ','status_id','name', $status_id );
         $nf_option = array();
         $nf_option[] = JHTML::_('select.option', 0, _JSHOP_HIDE, 'id', 'name');
         $nf_option[] = JHTML::_('select.option', 1, _JSHOP_SHOW, 'id', 'name');
-        $lists['notfinished'] = JHTML::_('select.genericlist', $nf_option, 'notfinished','style = "width: 100px;" ','id','name', $notfinished );
+        $lists['notfinished'] = JHTML::_('select.genericlist', $nf_option, 'notfinished','class="chosen-select" style="width: 100px;" ','id','name', $notfinished );
         
         $firstYear = $orders->getMinYear(); 
         $y_option = array();
@@ -72,7 +72,7 @@ class JshoppingControllerOrders extends JControllerLegacy{
         for($y=$firstYear;$y<=date("Y");$y++){
             $y_option[] = JHTML::_('select.option', $y, $y, 'id', 'name');
         }        
-        $lists['year'] = JHTML::_('select.genericlist', $y_option, 'year', 'style = "width: 80px;" ', 'id', 'name', $year);
+        $lists['year'] = JHTML::_('select.genericlist', $y_option, 'year', 'class="chosen-select" style="width: 80px;" ', 'id', 'name', $year);
         
         $y_option = array();
         $y_option[] = JHTML::_('select.option', 0, " - - ", 'id', 'name');
@@ -80,7 +80,7 @@ class JshoppingControllerOrders extends JControllerLegacy{
             if ($y<10) $y_month = "0".$y; else $y_month = $y;
             $y_option[] = JHTML::_('select.option', $y_month, $y_month, 'id', 'name');
         }        
-        $lists['month'] = JHTML::_('select.genericlist', $y_option, 'month', 'style = "width: 80px;" ', 'id', 'name', $month);
+        $lists['month'] = JHTML::_('select.genericlist', $y_option, 'month', 'class="chosen-select" style="width: 80px;" ', 'id', 'name', $month);
         
         $y_option = array();
         $y_option[] = JHTML::_('select.option', 0, " - - ", 'id', 'name');
@@ -88,7 +88,7 @@ class JshoppingControllerOrders extends JControllerLegacy{
             if ($y<10) $y_day = "0".$y; else $y_day = $y;
             $y_option[] = JHTML::_('select.option', $y_day, $y_day, 'id', 'name');
         }        
-        $lists['day'] = JHTML::_('select.genericlist', $y_option, 'day', 'style = "width: 80px;" ', 'id', 'name', $day);
+        $lists['day'] = JHTML::_('select.genericlist', $y_option, 'day', 'class="chosen-select" style="width: 80px;" ', 'id', 'name', $day);
 		
 		$payments = JSFactory::getModel("payments");
         $payments_list = $payments->getListNamePaymens(0);
@@ -142,6 +142,7 @@ class JshoppingControllerOrders extends JControllerLegacy{
         $view->assign('list_order_status', $list_order_status);
         $view->assign('client_id', $client_id);
         $view->assign('total', $total);
+        $view->sidebar = JHtmlSidebar::render();
         $view->_tmp_order_list_html_end = '';
         $dispatcher->trigger('onBeforeShowOrderListView', array(&$view));
 		$view->displayList(); 
@@ -554,20 +555,25 @@ class JshoppingControllerOrders extends JControllerLegacy{
         
         $shippings = JSFactory::getModel("shippings");
         $shippings_list = $shippings->getAllShippings(0);
-        $shippings_select = JHTML::_('select.genericlist', $shippings_list, 'shipping_method_id', '', 'shipping_id', 'name', $order->shipping_method_id);
+        $first = array();
+        $first[] = JHTML::_('select.option', 0, "- - -", 'shipping_id', 'name');
+        $shippings_select = JHTML::_('select.genericlist', array_merge($first, $shippings_list), 'shipping_method_id', 'onchange="order_shipping_calculate()"', 'shipping_id', 'name', $order->shipping_method_id);
         
         $payments = JSFactory::getModel("payments");
         $payments_list = $payments->getAllPaymentMethods(0);
-        $payments_select = JHTML::_('select.genericlist', $payments_list, 'payment_method_id', '', 'payment_id', 'name', $order->payment_method_id);
+        $first = array();
+        $first[] = JHTML::_('select.option', 0, "- - -", 'payment_id', 'name');
+        $payments_select = JHTML::_('select.genericlist', array_merge($first, $payments_list), 'payment_method_id', 'onchange="order_payment_calculate()"', 'payment_id', 'name', $order->payment_method_id);
         
         $deliverytimes = JSFactory::getAllDeliveryTime();
-        $first=array(0=>"- - -");
-		$delivery_time_select = JHTML::_('select.genericlist', array_merge($first,$deliverytimes), 'order_delivery_times_id', '', 'id', 'name', $order->delivery_times_id);
+        $first = array(0=>"- - -");
+		$delivery_time_select = JHTML::_('select.genericlist', array_merge($first, $deliverytimes), 'order_delivery_times_id', '', 'id', 'name', $order->delivery_times_id);
         
         $users = JSFactory::getModel('users');
-        $users_list = $users->getUsers();
-        $first = array(0=>'- - -');
-        $users_list_select = JHTML::_('select.genericlist', array_merge($first,$users_list), 'user_id', 'onchange="updateBillingShippingForUser(this.value);"', 'user_id', 'name', $order->user_id);
+        $users_list = $users->getUsers();        
+        $first = array();
+        $first[] = JHTML::_('select.option', -1, "- - -", 'user_id', 'name');
+        $users_list_select = JHTML::_('select.genericlist', array_merge($first, $users_list), 'user_id', 'onchange="updateBillingShippingForUser(this.value);"', 'user_id', 'name', $order->user_id);
 
         filterHTMLSafe($order);
         foreach($order_items as $k=>$v){
@@ -774,5 +780,40 @@ class JshoppingControllerOrders extends JControllerLegacy{
         $client_id = JRequest::getInt('client_id',0);
         $this->setRedirect("index.php?option=com_jshopping&controller=orders&client_id=".$client_id);
     }
+    
+    function loadtaxorder(){
+        $post = JRequest::get('post');
+        $data_order = (array)$post['data_order'];
+        $products = (array)$data_order['product'];
+
+        $orders = JSFactory::getModel("orders");
+        $taxes_array = $orders->loadtaxorder($data_order, $products);
+        print json_encode($taxes_array);
+        die;
+    }
+    
+    function loadshippingprice(){
+        $post = JRequest::get('post');
+        $data_order = (array)$post['data_order'];
+        $products = (array)$data_order['product'];
+
+        $orders = JSFactory::getModel("orders");
+        $prices = $orders->loadshippingprice($data_order, $products);
+        print json_encode($prices);
+        die;
+    }
+    
+    function loadpaymentprice(){
+        $post = JRequest::get('post');
+        $data_order = (array)$post['data_order'];
+        $products = (array)$data_order['product'];
+
+        $orders = JSFactory::getModel("orders");
+        $price = $orders->loadpaymentprice($data_order, $products);
+        $prices = array('price'=>$price);
+        print json_encode($prices);
+        die;
+    }
+    
 }
 ?>

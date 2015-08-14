@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.6.1 10.08.2014
+* @version      4.10.0 10.08.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -17,7 +17,8 @@ class JshoppingControllerOther extends JControllerLegacy{
         addSubmenu("other");
         $view=$this->getView("panel", 'html');
         $view->setLayout("options");
-        
+        $view->sidebar = JHtmlSidebar::render();
+                
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayOptionsPanel', array(&$view));
         $view->displayOptions();

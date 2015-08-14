@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 31.01.2015
+* @version      4.10.0 31.01.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -29,7 +29,8 @@ class JshoppingControllerConfig extends JControllerLegacy{
             JError::raiseWarning("",_JSHOP_ERROR_MAIN_CURRENCY_VALUE);    
         }
         $view=$this->getView("panel", 'html');
-        $view->setLayout("config"); 
+        $view->setLayout("config");
+        $view->sidebar = JHtmlSidebar::render();
         $view->displayConfig();
     }
     
@@ -50,6 +51,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->setLayout("general");
         $view->assign('etemplatevar', '');
 		$view->assign("lists", $lists);
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigGeneral', array(&$view));
@@ -115,6 +117,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->setLayout("categoryproduct");
         $view->assign("lists", $lists);
         $view->assign('etemplatevar', '');
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigCatProd', array(&$view));
@@ -150,6 +153,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->assign("lists", $lists); 
         $view->assign("currency_code", $currency_code);
         $view->assign('etemplatevar', '');
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigCheckout', array(&$view));
@@ -168,6 +172,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->assign("current_fields", $current_fields);
         $view->assign("fields_sys", $fields_client_sys);
         $view->assign('etemplatevar', '');
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigFieldRegister', array(&$view));
@@ -191,6 +196,8 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->setLayout("adminfunction");
         $view->assign("lists", $lists);
         $view->assign('etemplatevar', '');
+        $view->sidebar = JHtmlSidebar::render();
+        
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigAdminFunction', array(&$view));
         $view->display();
@@ -217,6 +224,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->setLayout("currency");
 		$view->assign("lists", $lists);
         $view->assign('etemplatevar', '');
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigCurrency', array(&$view));
@@ -237,6 +245,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->setLayout("image");
         $view->assign("select_resize_type", $select_resize_type);
         $view->assign('etemplatevar', '');
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigImage', array(&$view));
@@ -261,6 +270,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->assign("lists", $lists); 
 		$view->assign("vendor", $vendor);
         $view->assign('etemplatevar', '');
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeEditConfigStoreInfo', array(&$view));
@@ -487,7 +497,8 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view=$this->getView("config", 'html');
         $view->setLayout("listseo");
         $view->assign('etemplatevar', '');
-        $view->assign("rows", $rows); 
+        $view->assign("rows", $rows);
+        $view->sidebar = JHtmlSidebar::render(); 
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplaySeo', array(&$view));
@@ -557,7 +568,8 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view=$this->getView("config", 'html');
         $view->setLayout("liststatictext");
         $view->assign('etemplatevar', '');
-        $view->assign("rows", $rows); 
+        $view->assign("rows", $rows);
+        $view->sidebar = JHtmlSidebar::render(); 
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayStatisticText', array(&$view)); 
@@ -716,6 +728,7 @@ class JshoppingControllerConfig extends JControllerLegacy{
         $view->assign("config", $jshopConfig);
         $view->assign('etemplatevar', '');
 		$view->assign("lists", $lists);
+        $view->sidebar = JHtmlSidebar::render();
 		
 		$dispatcher = JDispatcher::getInstance();
 		$dispatcher->trigger('onBeforeEditConfigOtherConfig', array(&$view));

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.3.1 05.08.2013
+* @version      4.10.0 05.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -20,7 +20,7 @@ class ImageLib{
     * @param string if not empty then save to file        
 	* @param int randomline    
 	*/
-	static function createImageTextKod($width, $height, $text, $TTFFile, $fontsize=16, $file='',$randomline=2){
+	static function createImageTextKod($width, $height, $text, $TTFFile, $fontsize=16, $file=null,$randomline=2){
 		$img = imagecreate($width,$height);
 		$col = imagecolorallocate($img,255,255,255);
 

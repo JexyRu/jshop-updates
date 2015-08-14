@@ -61,6 +61,7 @@ class JshoppingControllerExtTaxes extends JControllerLegacy{
         $view->assign('config', $jshopConfig);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforedisplayExtTax', array(&$view)); 

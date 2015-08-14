@@ -12,8 +12,12 @@ $jshopConfig=JSFactory::getConfig();
 JHtml::_('bootstrap.tooltip');
 $fields=$this->fields;
 $current_fields=$this->current_fields;
-displaySubmenuConfigs('fieldregister');
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuConfigs('fieldregister');?>
 <div class="jshop_edit">
 <form class="jshopfieldregister" action="index.php?option=com_jshopping&controller=config" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 <?php print $this->tmp_html_start?>
@@ -137,4 +141,5 @@ foreach($fields['editaccount'] as $field){?>
 <div class="clr"></div>
 <?php print $this->tmp_html_end?>
 </form>
+</div>
 </div>

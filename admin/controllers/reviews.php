@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.6.1 31.07.2013
+* @version      4.10.0 31.07.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -49,7 +49,7 @@ class JshoppingControllerReviews extends JControllerLegacy{
             if (count($products)) {
                 $start_pr_option = JHTML::_('select.option', '0', _JSHOP_SELECT_PRODUCT , 'product_id', 'name');
                 array_unshift($products, $start_pr_option);   
-                $products_select = JHTML::_('select.genericlist', $products, 'product_id', 'class = "inputbox" onchange="document.adminForm.submit();" size = "1" ', 'product_id', 'name', $product_id);
+                $products_select = JHTML::_('select.genericlist', $products, 'product_id', 'class="chosen-select" onchange="document.adminForm.submit();" size = "1" ', 'product_id', 'name', $product_id);
             }
         }
         
@@ -65,7 +65,7 @@ class JshoppingControllerReviews extends JControllerLegacy{
         $categories_select = buildTreeCategory(0,1,0);
         array_unshift($categories_select, $start_option);
         
-        $categories = JHTML::_('select.genericlist', $categories_select, 'category_id', 'class = "inputbox" onchange="document.adminForm.submit();" size = "1" ', 'category_id', 'name', $category_id);
+        $categories = JHTML::_('select.genericlist', $categories_select, 'category_id', 'class="chosen-select" onchange="document.adminForm.submit();" size = "1" ', 'category_id', 'name', $category_id);
         $view=$this->getView("comments", 'html');
         $view->setLayout("list");
         $view->assign('categories', $categories);
@@ -77,6 +77,7 @@ class JshoppingControllerReviews extends JControllerLegacy{
         $view->assign('products_select', $products_select);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayReviews', array(&$view));		

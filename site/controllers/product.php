@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.8.0 18.12.2014
+* @version      4.10.0 18.12.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -212,7 +212,7 @@ class JshoppingControllerProduct extends JControllerLegacy{
         
         $product->button_back_js_click = "history.go(-1);";
         if ($session->get('jshop_end_page_list_product') && $jshopConfig->product_button_back_use_end_list){
-            $product->button_back_js_click = "location.href='".$session->get('jshop_end_page_list_product')."';";
+            $product->button_back_js_click = "location.href='".jsFilterUrl($session->get('jshop_end_page_list_product'))."';";
         }
 		
         $displaybuttons = '';

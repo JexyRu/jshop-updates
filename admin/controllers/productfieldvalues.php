@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      3.7.0 26.12.2010
+* @version      4.10.0 26.12.2010
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -42,6 +42,7 @@ class JshoppingControllerProductFieldValues extends JControllerLegacy{
 		$view->assign('text_search', $text_search);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
         
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayProductFieldValues', array(&$view));

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.7.0 20.12.2011
+* @version      4.10.0 20.12.2011
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -29,6 +29,7 @@ class JshoppingControllerUpdate extends JControllerLegacy{
 		$view=$this->getView("update", 'html');  
         $view->assign('etemplatevar1', '');
         $view->assign('etemplatevar2', '');
+        $view->sidebar = JHtmlSidebar::render();
 		$view->display(); 
     }
 

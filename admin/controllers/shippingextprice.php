@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      3.3.0 20.12.2011
+* @version      4.10.0 20.12.2011
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -29,6 +29,7 @@ class JshoppingControllerShippingExtPrice extends JControllerLegacy{
 		$view = $this->getView("shippingext", 'html');
         $view->setLayout("list");
 		$view->assign('rows', $rows);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayShippingExtPrices', array(&$view));

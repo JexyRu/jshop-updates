@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.3.1 13.08.2013
+* @version      4.10.0 13.08.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -10,6 +10,7 @@ defined('_JEXEC') or die('Restricted access');
 ?>
 <div class = "jshop pagelogin" id="comjshop">    
     <h1><?php print _JSHOP_LOGIN ?></h1>
+    <?php print $this->checkout_navigator?>
     
     <?php if ($this->config->shop_user_guest && $this->show_pay_without_reg) : ?>
         <span class = "text_pay_without_reg"><?php print _JSHOP_ORDER_WITHOUT_REGISTER_CLICK?> <a href="<?php print SEFLink('index.php?option=com_jshopping&controller=checkout&task=step2',1,0, $this->config->use_ssl);?>"><?php print _JSHOP_HERE?></a></span>

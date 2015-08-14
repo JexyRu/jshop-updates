@@ -1,6 +1,6 @@
 <?php
 /**
- * @version      4.9.2 22.10.2014
+ * @version      4.10.0 22.10.2014
  * @author       MAXXmarketing GmbH
  * @package      Jshopping
  * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -11,6 +11,8 @@ defined('_JEXEC') or die('Restricted access');
 $countprod = count($this->products);
 ?>
 <div class="jshop" id="comjshop">
+<?php print $this->checkout_navigator?>
+
 <form action="<?php print SEFLink('index.php?option=com_jshopping&controller=cart&task=refresh') ?>" method="post" name="updateCart">
 
 <?php print $this->_tmp_ext_html_cart_start ?>    

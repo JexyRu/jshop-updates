@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.9.0 22.10.2014
+* @version      4.10.0 22.10.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -15,8 +15,12 @@ $limitstart=JRequest::getVar('limitstart' ,'');
 $limit=JRequest::getVar('limit', 10);
 $status_id=JRequest::getVar('status_id', '');
 $adv_string='&limitstart='.$limitstart.'&limit='.$limit.'&status_id='.$status_id.'&client_id='.$this->client_id;
-JHtml::_('formbehavior.chosen', 'select');
+JHtml::_('formbehavior.chosen', '.chosen-select');
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
 <form name="adminForm" id="adminForm" method="post" action="index.php?option=com_jshopping&controller=orders">
 <?php print $this->tmp_html_start?>
 
@@ -289,3 +293,4 @@ JHtml::_('formbehavior.chosen', 'select');
 <?php print $this->tmp_html_end?>
 </form>
 <?php print $this->_tmp_order_list_html_end;?>
+</div>

@@ -367,3 +367,7 @@ div#element-box .jssubmenu div.m {
 .icon-back:before {
     content: "\e008";
 }
+.product_attribute_select .prod_attr_img{
+	vertical-align: top;
+	margin-left:5px;
+}

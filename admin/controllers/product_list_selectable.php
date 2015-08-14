@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 13.06.2013
+* @version      4.10.0 13.06.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -11,7 +11,8 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.controller');
 jimport('joomla.html.pagination');
-class JShoppingControllerProduct_List_Selectable extends JControllerLegacy {
+class JShoppingControllerProduct_List_Selectable extends JControllerLegacy{
+    
 	function display($cachable = false, $urlparams = false){
         checkAccessController("product_list_selectable");
 		JHTML::_('behavior.framework');
@@ -54,7 +55,7 @@ class JShoppingControllerProduct_List_Selectable extends JControllerLegacy {
 		
 		array_unshift($categories_select, $parentTop);  
 		  
-		$lists['treecategories'] = JHTML::_('select.genericlist', $categories_select, 'category_id', 'style="width: 150px;" onchange="document.adminForm.submit();"', 'category_id', 'name', $category_id);
+		$lists['treecategories'] = JHTML::_('select.genericlist', $categories_select, 'category_id', 'class="chosen-select" style="width: 150px;" onchange="document.adminForm.submit();"', 'category_id', 'name', $category_id);
 		
 		$manuf1 = array();
         $manuf1[0] = new stdClass();
@@ -63,20 +64,20 @@ class JShoppingControllerProduct_List_Selectable extends JControllerLegacy {
         $manufs = JSFactory::getModel('Manufacturers', 'JShoppingModel')->getList();
 
 		$manufs = array_merge($manuf1, $manufs);
-		$lists['manufacturers'] = JHTML::_('select.genericlist', $manufs, 'manufacturer_id', 'style="style="width: 150px;" onchange="document.adminForm.submit();"', 'manufacturer_id', 'name', $manufacturer_id);
+		$lists['manufacturers'] = JHTML::_('select.genericlist', $manufs, 'manufacturer_id', 'class="chosen-select" style="width: 150px;" onchange="document.adminForm.submit();"', 'manufacturer_id', 'name', $manufacturer_id);
 
 		if ($jshopConfig->admin_show_product_labels) {
 			$alllabels = JSFactory::getModel('ProductLabels', 'JShoppingModel')->getList();
 			$first = array();
 			$first[] = JHTML::_('select.option', '0', " - "._JSHOP_LABEL." - ", 'id','name');        
-			$lists['labels'] = JHTML::_('select.genericlist', array_merge($first, $alllabels), 'label_id', 'style="width: 100px;" onchange="document.adminForm.submit();"','id','name', $label_id);
+			$lists['labels'] = JHTML::_('select.genericlist', array_merge($first, $alllabels), 'label_id', 'class="chosen-select" style="width: 100px;" onchange="document.adminForm.submit();"','id','name', $label_id);
 		}
 
 		$f_option = array();
 		$f_option[] = JHTML::_('select.option', 0, " - "._JSHOP_SHOW." - ", 'id', 'name');
 		$f_option[] = JHTML::_('select.option', 1, _JSHOP_PUBLISH, 'id', 'name');
 		$f_option[] = JHTML::_('select.option', 2, _JSHOP_UNPUBLISH, 'id', 'name');
-		$lists['publish'] = JHTML::_('select.genericlist', $f_option, 'publish', 'style="width: 100px;" onchange="document.adminForm.submit();"', 'id', 'name', $publish);
+		$lists['publish'] = JHTML::_('select.genericlist', $f_option, 'publish', 'class="chosen-select" style="width: 100px;" onchange="document.adminForm.submit();"', 'id', 'name', $publish);
 		
 		$view = $this->getView('product_list', 'html');
         $view->setLayout("selectable");

@@ -10,8 +10,12 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('bootstrap.tooltip');
 $lists=$this->lists;
 $jshopConfig=$this->config;
-displaySubmenuConfigs('otherconfig');
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+<?php displaySubmenuConfigs('otherconfig');?>
 <div class="jshop_edit"> 
 <form action="index.php?option=com_jshopping&controller=config" method="post" name="adminForm" id="adminForm">
 <?php print $this->tmp_html_start?>
@@ -76,4 +80,5 @@ displaySubmenuConfigs('otherconfig');
 <div class="clr"></div>
 <?php print $this->tmp_html_end?>
 </form>
+</div>
 </div>

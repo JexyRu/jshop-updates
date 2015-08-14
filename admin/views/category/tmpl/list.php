@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.9.0 05.11.2013
+* @version      4.10.0 05.11.2013
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -14,6 +14,10 @@ $count = count($categories);
 $pageNav = $this->pagination;
 $saveOrder = $this->filter_order_Dir=="asc" && $this->filter_order=="ordering";
 ?>
+<div id="j-sidebar-container" class="span2">
+    <?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
 <form action="index.php?option=com_jshopping&controller=categories" method="post" enctype="multipart/form-data" name="adminForm" id="adminForm">
 <?php print $this->tmp_html_start?>
 
@@ -143,3 +147,4 @@ $saveOrder = $this->filter_order_Dir=="asc" && $this->filter_order=="ordering";
 <input type="hidden" name="boxchecked" value="0" />
 <?php print $this->tmp_html_end?>
 </form>
+</div>

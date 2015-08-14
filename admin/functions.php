@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.7.0 31.05.2014
+* @version      4.10.0 31.05.2014
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -123,7 +123,7 @@ function addSubmenu($vName){
     
     foreach($menu as $item){
         if ($item[3]){
-            JSubMenuHelper::addEntry( $item[0], $item[1], $item[2]);
+            JHtmlSidebar::addEntry( $item[0], $item[1], $item[2]);
         }
     }
 }

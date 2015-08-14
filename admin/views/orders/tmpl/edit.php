@@ -1,6 +1,6 @@
 <?php 
 /**
-* @version      4.9.0 10.02.2014
+* @version      4.10.0 28.05.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -26,8 +26,9 @@ var lang_weight='<?php print _JSHOP_PRODUCT_WEIGHT?>';
 var lang_vendor='<?php print _JSHOP_VENDOR?>';
 function selectProductBehaviour(pid, eName){
 	var currency_id = jQuery('#currency_id').val();
-    loadProductInfoRowOrderItem(pid, eName, currency_id);
-    SqueezeBox.close();
+    var display_price = jQuery('#display_price').val();
+    var user_id = jQuery('#user_id').val();
+    loadProductInfoRowOrderItem(pid, eName, currency_id, display_price, user_id, 1);    
 }
 var userinfo_fields = {};
 <?php foreach ($config_fields as $k=>$v){
@@ -367,7 +368,8 @@ var userinfo_link = "<?php print "index.php?option=com_jshopping&controller=user
    <a class="modal btn" rel="{handler: 'iframe', size: {x: 800, y: 600}}" href="index.php?option=com_jshopping&controller=product_list_selectable&tmpl=component&e_name=<?php echo $i?>"><?php print _JSHOP_LOAD?></a>
    <br />
    <?php if ($this->config->admin_show_attributes){?>
-   <textarea rows="2" cols="24" name="product_attributes[<?php echo $i?>]" title="<?php print _JSHOP_ATTRIBUTES?>"><?php print $item->product_attributes?></textarea><br />
+   <textarea rows="2" cols="24" name="product_attributes[<?php echo $i?>]" title="<?php print _JSHOP_ATTRIBUTES?>"><?php print $item->product_attributes?></textarea>   
+   <br />
    <?php }?>
    <?php if ($this->config->admin_show_freeattributes){?>
    <textarea rows="2" cols="24" name="product_freeattributes[<?php echo $i?>]" title="<?php print _JSHOP_FREE_ATTRIBUTES?>"><?php print $item->product_freeattributes?></textarea>
@@ -375,6 +377,7 @@ var userinfo_link = "<?php print "index.php?option=com_jshopping&controller=user
    <input type="hidden" name="product_id[<?php echo $i?>]" value="<?php echo $item->product_id?>" />
    <input type="hidden" name="delivery_times_id[<?php echo $i?>]" value="<?php echo $item->delivery_times_id?>" />
    <input type="hidden" name="thumb_image[<?php echo $i?>]" value="<?php echo $item->thumb_image?>" />
+   <input type="hidden" name="attributes[<?php echo $i?>]" value="<?php echo $item->attributes?>" />
    <?php if ($this->config->admin_order_edit_more){?>
    <div>
    <?php echo _JSHOP_PRODUCT_WEIGHT?> <input type="text" name="weight[<?php echo $i?>]" value="<?php echo $item->weight?>" />
@@ -477,6 +480,7 @@ var userinfo_link = "<?php print "index.php?option=com_jshopping&controller=user
   <tr class="bold" id='row_button_add_tax'>
     <td></td>
     <td class="left">
+    <input type="button" class="btn" value="<?php print _JSHOP_TAX_CALCULATE?>" onclick="order_tax_calculate();">
     <input type="button" class="btn" value="<?php print _JSHOP_ADD." "._JSHOP_TAX?>" onclick="addOrderTaxRow();">
     </td>
   </tr>

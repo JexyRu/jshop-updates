@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.9.0 09.01.2015
+* @version      4.10.0 09.01.2015
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -125,7 +125,7 @@ function hexToStr($hex){
 function insertValueInArray($value, &$array) {
     if ($key = array_search($value, $array)) return $key;
     $array[$value] = $value;
-    asort($array);
+    ksort($array);
     return $key-1;
 }
 
@@ -1212,6 +1212,9 @@ function getDisplayPriceForProduct($price){
     if ($display_price && $price==0 && $jshopConfig->user_as_catalog){
         $display_price = 0;
     }
+    if ($display_price && $price==0 && $jshopConfig->product_hide_price_null){
+        $display_price = 0;
+    }
 return $display_price;
 }
 
@@ -1427,8 +1430,13 @@ function xhtmlUrl($url, $filter=1){
 return $url;
 }
 
-function jsFilterUrl($url){
+function jsFilterUrl($url, $extra = 0){
     $url = strip_tags($url);
+    if ($extra){
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+        $trans = array("'"=>"&#039;", '"'=>"&quot;", '('=>'&#40;', ')'=>'&#41;', ';'=>'&#59;');
+        $url = strtr($url, $trans);
+    }
 return $url;
 }
 

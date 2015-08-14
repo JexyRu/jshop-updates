@@ -1,6 +1,6 @@
 <?php
 /**
-* @version      4.1.0 20.09.2012
+* @version      4.10.0 20.09.2012
 * @author       MAXXmarketing GmbH
 * @package      Jshopping
 * @copyright    Copyright (C) 2010 webdesigner-profi.de. All rights reserved.
@@ -44,6 +44,7 @@ class JshoppingControllerAttributesValues extends JControllerLegacy{
         $view->assign('attr_name', $attr_name);
         $view->assign('filter_order', $filter_order);
         $view->assign('filter_order_Dir', $filter_order_Dir);
+        $view->sidebar = JHtmlSidebar::render();
 		
         $dispatcher = JDispatcher::getInstance();
         $dispatcher->trigger('onBeforeDisplayAttributesValues', array(&$view));
